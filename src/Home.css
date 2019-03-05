@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+
+.ITAtlasText {
+  margin-top: 0.7em;
+  margin-left: 1.5em;
+  font-size: 2em;
+  color: #606060;
+  font-family: 'Lato', sans-serif;
+}
+
+.stateText {
+  margin-top: 1em;
+  margin-left: 1.5em;
+  font-size: 1.5em;
+  color: #606060;
+  font-family: 'Lato', sans-serif;
+}
+
+.blueGrad {
+  background: linear-gradient(to right, #33ccff 0%, #0066cc 83%);
+}
+
+.shareButton {
+  background: linear-gradient(to right, #33ccff 0%, #0066cc 83%);
+  height: 46px;
+  position: absolute; 
+  right: 25px;
+}
+
+.userIcons {
+  position: absolute; 
+  right: 150px;
+  margin-top: 14px;
+}
+
+.accountdropdown{
+  padding-left: 50px;
+  padding-top: 15px;
+}
+
+.dropdownColor {
+  background: linear-gradient(to right, #ffcc00 0%, #ff9900 50%);
+}
+
+.avatar {
+  position: absolute;
+  right: 175px;
+  padding-top: 15px;
+}

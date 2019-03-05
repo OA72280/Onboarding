@@ -1,0 +1,41 @@
+.sideLogo {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 4.5em;
+    height: 1em;
+}
+
+.singOutIcon {
+    width: 20px;
+    height: 20px;
+    font-size: 1.5rem;
+    color: grey;
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2rem;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.sideHover {
+    font-size: 1.5em;
+    /* font-family: 'Nunito', sans-serif; */
+    color: grey;
+
+    margin-bottom: 0;
+
+    padding: 1rem 1.5rem 1rem 1.5rem;
+
+    text-align: center;
+
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    /* ...and now for the proper property */
+    transition: .5s;
+}
+
+.sideHover:hover {
+    background-color: #dddddd;
+}
