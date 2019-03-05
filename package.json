@@ -4,8 +4,14 @@
   "homepage": "http://brow1144.github.io/launch",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "firebase": "^5.8.5",
+    "font-awesome": "^4.7.0",
+    "mdbreact": "^4.11.0",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-dom": "^16.8.3",
+    "react-router-dom": "^4.3.1",
+    "reactstrap": "^7.1.0"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",

@@ -1,0 +1,97 @@
+.tall {
+    height: 100%;
+}
+
+article {
+    width: 70%;
+    padding: 40px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.text {
+    font-size: 1.2em;
+    color: darkgrey;
+    height: 100px;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+
+.container {
+    display: table;
+    width: 100%;
+}
+
+.left-half {
+    background: url(../blueSignIn.jpg) no-repeat right top fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    left: 0;
+    width: 50%;
+}
+
+.right-half {
+    position: absolute;
+    right: 0;
+    width: 50%;
+}
+
+.imgCol {
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    margin-bottom: 28px;
+}
+
+.firstName {
+    width: 50%;
+}
+
+.lastName {
+    width: 50%;
+}
+
+@media only screen and (max-width: 500px) {
+
+    .left-half {
+        width: 20%;
+    }
+
+    .right-half {
+        width: 80%;
+    }
+
+    article {
+        width: 100%;
+    }
+
+    .signInButton {
+        width: 10em;
+        height: 3em;
+        font-size: 0.4em;
+    }
+}
+
+@media only screen and (max-width: 1280px) {
+    .logo {
+        visibility: hidden;
+        height: 0;
+        width: 0;
+    }
+
+    .text {
+        height: 50px;
+    }
+}
+
+
+
