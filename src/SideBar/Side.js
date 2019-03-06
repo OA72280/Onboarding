@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { fireauth } from "../base";
-import { Container, Fa, Row, Col, Input, CardHeader, CardBody, CardTitle, Button, Modal, ModalFooter} from 'mdbreact'
+// import { Container, Fa, Row, Col, Input, CardHeader, CardBody, CardTitle, Button, Modal, ModalFooter} from 'mdbreact'
 import './Side.css'
 
 class Side extends Component {

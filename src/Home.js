@@ -27,8 +27,7 @@ class Home extends Component {
   }
 
   componentWillMount() {
-
-    let self = this
+    // let self = this
     mql.addListener(this.mediaQueryChanged)
     window.addEventListener('resize', this.handleWindowChange)
     this.setState({
@@ -104,10 +103,10 @@ class Home extends Component {
     };
 
     // Data about user and where they are
-    const data = {
-      user: this.props.user,
-      uid: this.props.uid,
-    }
+    // const data = {
+    //   user: this.props.user,
+    //   uid: this.props.uid,
+    // }
 
     // Data used to show side bar 
     const sideData = {

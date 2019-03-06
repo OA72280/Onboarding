@@ -10,6 +10,19 @@ import iNine from './i9.png';
 
 class TaskBox extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selectedOption: null,
+    }
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  }
+
   render() {
 
     const options = [
@@ -17,6 +30,8 @@ class TaskBox extends Component {
       { value: 'In Progress', label: 'In Progress' },
       { value: 'Complete', label: 'Complete' }
     ]
+    const { selectedOption } = this.state;
+
   
     return (
       <div className="clientBox z-depth-5">
@@ -38,7 +53,11 @@ class TaskBox extends Component {
         <Row>
           <Col sm='1' />
           <Col sm='10'>
-            <Select options={options} />
+            <Select 
+              value={selectedOption}
+              onChange={this.handleChange}
+              options={options}
+            />
           </Col>
           <Col sm='1' />
         </Row>
@@ -46,7 +65,7 @@ class TaskBox extends Component {
         <br />
 
         <div>
-          <i class="fas fa-calendar-alt" />
+          <i className="fas fa-calendar-alt" />
           <p>Due 03/15/2018</p>
         </div>
 
