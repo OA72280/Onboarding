@@ -121,7 +121,7 @@ class Home extends Component {
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
     // if (this.props.path === 'AtlasGrid') {
-    let PageRequested = <TaskBox />
+    let PageRequested = <TaskBox color='redGrad' />
     // } 
     // else if (this.props.path === 'ClientTeam') {
     //   PageRequested = <ClientTeam owner={this.props.uid} account={this.props.account} />

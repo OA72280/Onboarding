@@ -7,10 +7,18 @@
 }
 
 .clientColorbox {
-  background-color: orange;
-  color: orange;
+  /* background-color: orange; */
+  /* color: orange; */
   height: 8em;
   width: 18em;
+}
+
+.greenGrad {
+  background: linear-gradient(to top, #93f07c 0%, #099214 75%);
+}
+
+.redGrad {
+  background: linear-gradient(to top, #ff8585 0%, #b41313 75%);
 }
 
 .name {

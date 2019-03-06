@@ -14,13 +14,19 @@ class TaskBox extends Component {
     super(props);
 
     this.state = {
-      selectedOption: null,
+      selectedOption: { value: 'Not Started', label: 'Not Started' },
+      color: 'redGrad',
     }
   }
 
   handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
+    if (selectedOption.value === 'Not Started') {
+      this.setState({ selectedOption: selectedOption, color: "redGrad"});
+    } else if (selectedOption.value === "In Progress") {
+      this.setState({ selectedOption: selectedOption, color: 'dropdownColor'});
+    } else if (selectedOption.value === "Complete") {
+      this.setState({ selectedOption: selectedOption, color: 'greenGrad' });
+    }
   }
 
   render() {
@@ -30,13 +36,13 @@ class TaskBox extends Component {
       { value: 'In Progress', label: 'In Progress' },
       { value: 'Complete', label: 'Complete' }
     ]
-    const { selectedOption } = this.state;
+    // const { selectedOption } = this.state;
 
   
     return (
       <div className="clientBox z-depth-5">
 
-        <div className={`clientColorbox dropdownColor`}>
+        <div className={`clientColorbox ${this.state.color}`}>
           {/* <a href={`mailto:${this.props.email}`}>
             <i className="fas fa-envelope email"></i>
           </a>
@@ -44,7 +50,7 @@ class TaskBox extends Component {
         </div>
         
         {/* <div className='circle z-depth-3'></div> */}
-        <img className='circle z-depth-3' alt="Fitz" src={iNine} />
+        <img className='circle z-depth-3' alt="i9" src={iNine} />
 
         <p className='name'>Complete I9</p>
 
@@ -54,7 +60,7 @@ class TaskBox extends Component {
           <Col sm='1' />
           <Col sm='10'>
             <Select 
-              value={selectedOption}
+              value={this.state.selectedOption}
               onChange={this.handleChange}
               options={options}
             />
