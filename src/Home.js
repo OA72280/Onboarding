@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 
 import Sidebar from 'react-sidebar'
 import Side from './SideBar/Side.js'
+import TaskBox from './TaskBox.js';
 
 // import {firestore} from './Backend/base.js'
 import {Row, Col} from 'reactstrap'
@@ -121,7 +122,7 @@ class Home extends Component {
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
     // if (this.props.path === 'AtlasGrid') {
-    let PageRequested = <p>LAUNCH</p>
+    let PageRequested = <TaskBox />
     // } 
     // else if (this.props.path === 'ClientTeam') {
     //   PageRequested = <ClientTeam owner={this.props.uid} account={this.props.account} />

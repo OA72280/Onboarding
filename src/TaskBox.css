@@ -1,0 +1,55 @@
+.clientBox { 
+  height: 25em;
+  width: 18em;
+  /* border: 1px solid black; */
+  text-align: center;
+  margin: 0 0 4em 0;
+}
+
+.clientColorbox {
+  background-color: orange;
+  color: orange;
+  height: 8em;
+  width: 18em;
+}
+
+.name {
+  padding-top: 1em;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.clientHR {
+  width: 15em;
+}
+
+.description {
+  margin: 0 1.1em 0 1.1em;
+  text-align: center;
+  font-size: 1em;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px; 
+  text-align: center;
+  display: inline-block;
+  margin-top: -5em;
+  object-fit: cover;
+}
+
+.email {
+  float: right;
+  margin: 20px 20px 0 0;
+  color: whitesmoke;
+  font-size: 1.3em;
+}
+
+.add {
+  float: left;
+  margin: 20px 0 0 20px;
+  color: whitesmoke;
+  font-size: 1.3em;
+  cursor: pointer;
+}
