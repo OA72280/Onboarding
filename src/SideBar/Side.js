@@ -62,15 +62,15 @@ class Side extends Component {
                         </div>
                     </a>
                     {/* </NavLink> */}
-{/* 
 
-                    <NavLink style={{textDecoration: 'none'}} to={`/itatlas/Home/SEC`}>
+                    <NavLink style={{textDecoration: 'none'}} to={`/launch/Calendar`}>
                         <div style={{cursor: 'pointer'}} className='sideHover'>
-                            <i className="fa fa-money" />
-                            <h6 style={{margin: '0', padding: '0', fontSize: '0.5em'}}>SEC Fillings</h6>
+                            <i className="fas fa-calendar-alt" />
+                            <h6 style={{textAlign: 'center', float: 'left', marginLeft: '-6px', fontSize: '0.4em'}}>Calendar</h6>
                         </div>
                     </NavLink>
 
+{/* 
                     <NavLink style={{textDecoration: 'none'}} to={`/itatlas/Home/Portfolio`}>
                         <div style={{cursor: 'pointer'}} className='sideHover'>
                             <i className="fa fa-camera-retro" />

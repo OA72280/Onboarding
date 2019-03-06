@@ -43,13 +43,9 @@ class TaskBox extends Component {
       <div className="clientBox z-depth-5">
 
         <div className={`clientColorbox ${this.state.color}`}>
-          {/* <a href={`mailto:${this.props.email}`}>
-            <i className="fas fa-envelope email"></i>
-          </a>
-          <i className="fas fa-plus-square add"></i> */}
+
         </div>
         
-        {/* <div className='circle z-depth-3'></div> */}
         <img className='circle z-depth-3' alt="i9" src={iNine} />
 
         <p className='name'>Complete I9</p>
