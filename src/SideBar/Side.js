@@ -55,12 +55,12 @@ class Side extends Component {
                     </NavLink> */}
 
                     {/* <NavLink style={{textDecoration: 'none'}} to={`/www.youtube.com`}> */}
-                    <a href="https://support.emc.com/myservice360/">
-                        <div className='sideHover'>
+                    {/* <a href="https://support.emc.com/myservice360/"> */}
+                        {/* <div className='sideHover'>
                             <i className="fab fa-hubspot"></i>
                             <h6 style={{margin: '0', padding: '0', fontSize: '0.5em'}}>Service 360</h6>
                         </div>
-                    </a>
+                    </a> */}
                     {/* </NavLink> */}
 
                     <NavLink style={{textDecoration: 'none'}} to={`/launch/Calendar`}>
