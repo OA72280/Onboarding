@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import SignIn from './SignIn/SignIn';
 import CreateUser from './CreateUser/CreateUser';
 import Home from './Home';
+import CalendarPage from './CalendarPage.js';
 import firebase from './base';
 
 import {Route, Switch, Redirect} from 'react-router-dom';
@@ -70,6 +71,18 @@ class App extends Component {
             ? (this.state.user
               ?
                 <Home {...data}/>
+              :
+               null
+            )
+            // eslint-disable-next-line
+            : <Redirect to="/launch/SignIn"/>
+        )}/>
+
+        <Route exact path='/launch/Calendar' render={() => (
+          this.signedIn()
+            ? (this.state.user
+              ?
+                <Home page='calendar' {...data}/>
               :
                null
             )

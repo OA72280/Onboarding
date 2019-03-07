@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import Sidebar from 'react-sidebar'
 import Side from './SideBar/Side.js'
 import TaskBox from './TaskBox.js';
+import CalendarPage from './CalendarPage.js';
 
 // import {firestore} from './Backend/base.js'
 import {Row, Col} from 'reactstrap'
@@ -120,8 +121,12 @@ class Home extends Component {
   
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
-    // if (this.props.path === 'AtlasGrid') {
-    let PageRequested = <TaskBox color='redGrad' />
+    let PageRequested;
+    if (this.props.page === 'calendar') {
+      PageRequested = <CalendarPage />
+    } else { 
+      PageRequested = <TaskBox color='redGrad' />
+    }
     // } 
     // else if (this.props.path === 'ClientTeam') {
     //   PageRequested = <ClientTeam owner={this.props.uid} account={this.props.account} />
