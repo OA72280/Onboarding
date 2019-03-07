@@ -62,7 +62,7 @@ class TaskBox extends Component {
               selectable
               events={dummyEvents}
               style={calendarStyles}
-              date={moment().toDate()}
+              defaultDate={new Date()}
               eventPropGetter={(this.eventStyleGetter)}
               // onSelectEvent={event => alert(event.title)}
             />
