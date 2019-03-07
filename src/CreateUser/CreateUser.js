@@ -4,7 +4,7 @@ import './CreateUser.css';
 import {Input, Button} from 'mdbreact';
 import {Form, Row, Col, Alert} from 'reactstrap';
 
-import {fireauth} from '../base';
+import {fireauth, firestore} from '../base';
 // import {database} from './base';
 
 class CreateUser extends Component {
@@ -16,6 +16,7 @@ class CreateUser extends Component {
       //Hides message when opening create user | object | ex. error message
       visible: false,
       message: '',
+      checked: false,
     };
   }
 
@@ -44,7 +45,30 @@ class CreateUser extends Component {
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});
       else {
         //creates user with email and password
-        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value)
+        fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).then(() => {
+
+          // If Team Leader
+          if (this.state.checked) {
+
+            let code = this.makeid(6);
+            
+            firestore.collection(code).doc('teamData').set({
+              leader: `${target.firstName.value} ${target.lastName.value}`,
+            })
+
+          // Not Team Leader
+          } else {
+
+            let code = this.makeid(15);
+
+            firestore.collection(target.teamCode.value).doc(code).set({
+              name: `${target.firstName.value} ${target.lastName.value}`,
+              email: target.email.value,
+            })
+
+          }
+
+        })
       }
     }
 
@@ -69,14 +93,20 @@ class CreateUser extends Component {
      * 
      */
 
-  makeid = () => {
+  makeid = (size) => {
     let text = "";
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
-    for (var i = 0; i < 15; i++)
+    for (var i = 0; i < size; i++)
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     
     return text;
+  }
+
+  toggleCheckbox = () => {
+    this.setState({
+      checked: !this.state.checked,
+    })
   }
 
   render() {
@@ -110,8 +140,18 @@ class CreateUser extends Component {
               <Input name='email' style={{fontSize: '0.85em'}} label="Email"/>
               <Input name='password' label="Password" type="password"/>
               <Input name='confirmPassword' label="Confirm Password" type="password"/>
-              <br/>
+              
+              {!this.state.checked ? 
+                  <Input name='teamCode' label="Team Code" />
+                :
+                  null
+              }
+
+              <input onChange={this.toggleCheckbox} defaultChecked={this.state.checked} type="checkbox" /> Team Leader
+              <br />
+              <br /> 
               <Button type='submit' className='signInButton' color="blue">Sign Up!</Button>
+
             </Form>
           </article>
         </div>
