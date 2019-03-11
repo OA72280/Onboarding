@@ -29,6 +29,7 @@ class CreateUser extends Component {
      */
 
   onSubmit = (ev) => {
+    let self = this
     ev.preventDefault();
     let target = ev.target;
 
@@ -53,6 +54,8 @@ class CreateUser extends Component {
 
             let code = this.makeid(6)
 
+            self.props.setTeamIDFromState(code)
+
             firestore.collection(code).doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
@@ -61,6 +64,8 @@ class CreateUser extends Component {
 
           // Not Team Leader
           } else {
+
+            self.props.setTeamIDFromState(target.teamCode.value)
 
             firestore.collection(target.teamCode.value).doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
@@ -72,7 +77,7 @@ class CreateUser extends Component {
       }
     }
   };
-
+  
   /**
      * 
      * dismisses alert

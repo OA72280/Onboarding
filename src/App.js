@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import SignIn from './SignIn/SignIn';
 import CreateUser from './CreateUser/CreateUser';
 import Home from './Home';
-import CalendarPage from './CalendarPage.js';
 import firebase from './base';
 
 import {Route, Switch, Redirect} from 'react-router-dom';
@@ -21,11 +20,13 @@ class App extends Component {
     this.state = {
       uid: null,
       user: null,
+      teamID: null,
     }
   }
 
   componentWillMount() {
     this.getUserFromsessionStorage();
+    this.getTeamIDFromSessionStorage();
     let self = this;
     firebase.auth().onAuthStateChanged(
       (user) => {
@@ -48,6 +49,17 @@ class App extends Component {
     this.setState({uid})
   }
 
+  getTeamIDFromSessionStorage = () => {
+    const teamID = sessionStorage.getItem('teamID');
+    if (!teamID) return;
+    this.setState({teamID: teamID});
+  }
+
+  setTeamIDFromState = (teamID) => {
+    sessionStorage.setItem('teamID', teamID)
+    this.setState({teamID: teamID});
+  }
+
   authHandler = (user) => {
     sessionStorage.setItem('uid', user.uid);
     this.setState({uid: user.uid, user: user})
@@ -61,12 +73,17 @@ class App extends Component {
     const data = {
       user: this.state.user,
       uid: this.state.uid,
+      teamID: this.state.teamID,
+    }
+
+    const methods = {
+      setTeamIDFromState: this.setTeamIDFromState,
     }
   
     return (
       <Switch>
 
-        <Route exact path='/launch/Home' render={() => (
+        <Route exact path='/launch/Home' render={(match) => (
           this.signedIn()
             ? (this.state.user
               ?
@@ -99,7 +116,7 @@ class App extends Component {
         
         <Route exact path='/launch/CreateAccount' render={() => (
           !this.signedIn()
-            ? <CreateUser/>
+            ? <CreateUser {...methods} />
             // eslint-disable-next-line
             : <Redirect to={`/launch/Home`}/>
         )}/>

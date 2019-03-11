@@ -24,6 +24,7 @@ class Home extends Component {
       mql: mql,
       docked: props.docked,
       open: props.open,
+      userData: null,
     };
   }
 
@@ -36,10 +37,17 @@ class Home extends Component {
       sidebarDocked: mql.matches,
     })
 
-    // firestore.collection(code).doc('teamData').set({
-      
-    // })
+    this.isLeader()
+  }
 
+  isLeader = () => {
+    let self = this
+    if (this.props.teamID === null || this.props.teamID === undefined) return
+    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((snapshot) => {
+      self.setState({
+        userData: snapshot.data()
+      })
+    })
   }
 
   /**
@@ -127,20 +135,20 @@ class Home extends Component {
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
     
-    // if (this.props.uid)
-    let PageRequested;
-    if (this.props.page === 'calendar') {
-      PageRequested = <CalendarPage />
-    } else { 
-      PageRequested = <TaskBox color='redGrad' />
+    let PageRequested;   
+    if (this.state.userData !== null) {
+      if (!this.state.userData.leader) {
+        if (this.props.page === 'calendar') {
+          PageRequested = <CalendarPage />
+        } else { 
+          PageRequested = <TaskBox color='redGrad' />
+        }
+      } else {
+        PageRequested = <p>LEADER!</p>
+      }
+    } else {
+      PageRequested = <p>Loading!</p>
     }
-    // } 
-    // else if (this.props.path === 'ClientTeam') {
-    //   PageRequested = <ClientTeam owner={this.props.uid} account={this.props.account} />
-    // }
-    // } else {
-    //   PageRequested = <ClientTeam {...data}/>
-    // }
 
     
     return (
