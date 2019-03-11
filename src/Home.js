@@ -5,7 +5,7 @@ import Side from './SideBar/Side.js'
 import TaskBox from './TaskBox.js';
 import CalendarPage from './CalendarPage.js';
 
-// import {firestore} from './Backend/base.js'
+import {firestore} from './base.js'
 import {Row, Col} from 'reactstrap'
 // import {Redirect} from 'react-router-dom';
 
@@ -35,6 +35,11 @@ class Home extends Component {
       mql: mql,
       sidebarDocked: mql.matches,
     })
+
+    // firestore.collection(code).doc('teamData').set({
+      
+    // })
+
   }
 
   /**
@@ -121,6 +126,8 @@ class Home extends Component {
   
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
+    
+    // if (this.props.uid)
     let PageRequested;
     if (this.props.page === 'calendar') {
       PageRequested = <CalendarPage />

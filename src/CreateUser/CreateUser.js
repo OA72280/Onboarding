@@ -44,34 +44,33 @@ class CreateUser extends Component {
       if (target.password.value !== target.confirmPassword.value)
         this.setState({visible: true, message: 'Passwords Don\'t Match!'});
       else {
+
         //creates user with email and password
         fireauth.createUserWithEmailAndPassword(target.email.value, target.password.value).then(() => {
 
           // If Team Leader
           if (this.state.checked) {
 
-            let code = this.makeid(6);
-            
-            firestore.collection(code).doc('teamData').set({
-              leader: `${target.firstName.value} ${target.lastName.value}`,
+            let code = this.makeid(6)
+
+            firestore.collection(code).doc(fireauth.currentUser.uid).set({
+              name: `${target.firstName.value} ${target.lastName.value}`,
+              email: target.email.value,
+              leader: true,
             })
 
           // Not Team Leader
           } else {
 
-            let code = this.makeid(15);
-
-            firestore.collection(target.teamCode.value).doc(code).set({
+            firestore.collection(target.teamCode.value).doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
+              leader: false, 
             })
-
           }
-
         })
       }
     }
-
   };
 
   /**
