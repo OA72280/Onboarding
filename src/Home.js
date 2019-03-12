@@ -2,10 +2,11 @@ import React, {Component} from 'react'
 
 import Sidebar from 'react-sidebar'
 import Side from './SideBar/Side.js'
-import TaskBox from './TaskBox.js';
 import CalendarPage from './CalendarPage.js';
+import Leader from './Leader'
+import Student from './Student'
 
-import {firestore} from './base.js'
+// import {firestore} from './base.js'
 import {Row, Col} from 'reactstrap'
 // import {Redirect} from 'react-router-dom';
 
@@ -36,20 +37,8 @@ class Home extends Component {
       mql: mql,
       sidebarDocked: mql.matches,
     })
-
-    // this.isLeader()
   }
-
-  isLeader = () => {
-    let self = this
-    if (this.props.teamID === null || this.props.teamID === undefined) return
-    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((snapshot) => {
-      self.setState({
-        userData: snapshot.data()
-      })
-    })
-  }
-
+  
   /**
    * 
    * Remove sizing listener
@@ -141,10 +130,10 @@ class Home extends Component {
         if (this.props.page === 'calendar') {
           PageRequested = <CalendarPage />
         } else { 
-          PageRequested = <TaskBox color='redGrad' />
+          PageRequested = <Student />
         }
       } else {
-        PageRequested = <p>LEADER!</p>
+        PageRequested = <Leader />
       }
     } else {
       PageRequested = null
