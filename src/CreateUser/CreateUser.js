@@ -62,6 +62,13 @@ class CreateUser extends Component {
               leader: true,
             })
 
+            firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
+              name: `${target.firstName.value} ${target.lastName.value}`,
+              email: target.email.value,
+              leader: false, 
+              team: code,
+            })
+
           // Not Team Leader
           } else {
 
@@ -72,6 +79,14 @@ class CreateUser extends Component {
               email: target.email.value,
               leader: false, 
             })
+
+            firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
+              name: `${target.firstName.value} ${target.lastName.value}`,
+              email: target.email.value,
+              leader: false, 
+              team: target.teamCode.value,
+            })
+
           }
         })
       }

@@ -4,6 +4,7 @@ import SignIn from './SignIn/SignIn';
 import CreateUser from './CreateUser/CreateUser';
 import Home from './Home';
 import firebase from './base';
+import {firestore} from './base';
 
 import {Route, Switch, Redirect} from 'react-router-dom';
 
@@ -27,6 +28,7 @@ class App extends Component {
   componentWillMount() {
     this.getUserFromsessionStorage();
     this.getTeamIDFromSessionStorage();
+    
     let self = this;
     firebase.auth().onAuthStateChanged(
       (user) => {
@@ -35,7 +37,7 @@ class App extends Component {
           self.authHandler(user)
         } else {
           // finished signing out
-          self.setState({uid: null}, () => {
+          self.setState({uid: null, teamID: null}, () => {
             // window.location.reload();
           });
         }
@@ -43,10 +45,24 @@ class App extends Component {
     )
   }
 
+  getTeamIDFromFirebase = () => {
+    let self = this
+    firestore.collection("peopleData").get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        if(self.state.uid === doc.data().team) {
+          self.setTeamIDFromState(doc.data().team)
+          // console.log(doc.data().team)
+        }
+      });
+    });
+  }
+
   getUserFromsessionStorage() {
     const uid = sessionStorage.getItem('uid');
     if (!uid) return;
-    this.setState({uid})
+    this.setState({uid}, () => {
+      this.getTeamIDFromFirebase();
+    })
   }
 
   getTeamIDFromSessionStorage = () => {
