@@ -37,7 +37,7 @@ class Home extends Component {
       sidebarDocked: mql.matches,
     })
 
-    this.isLeader()
+    // this.isLeader()
   }
 
   isLeader = () => {
@@ -136,8 +136,8 @@ class Home extends Component {
     // This is how the side bar laods the different components
     
     let PageRequested;   
-    if (this.state.userData !== null) {
-      if (!this.state.userData.leader) {
+    if (this.props.userData !== null) {
+      if (!this.props.userData.leader) {
         if (this.props.page === 'calendar') {
           PageRequested = <CalendarPage />
         } else { 
@@ -147,7 +147,7 @@ class Home extends Component {
         PageRequested = <p>LEADER!</p>
       }
     } else {
-      PageRequested = <p>Loading!</p>
+      PageRequested = null
     }
 
     

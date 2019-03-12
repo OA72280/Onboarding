@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       uid: null,
       user: null,
+      userData: null,
       teamID: null,
     }
   }
@@ -37,7 +38,7 @@ class App extends Component {
           self.authHandler(user)
         } else {
           // finished signing out
-          self.setState({uid: null, teamID: null}, () => {
+          self.setState({uid: null, teamID: null, userData: null}, () => {
             // window.location.reload();
           });
         }
@@ -49,12 +50,23 @@ class App extends Component {
     let self = this
     firestore.collection("peopleData").get().then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        if(self.state.uid === doc.data().team) {
+        if(self.state.uid === doc.id) {
           self.setTeamIDFromState(doc.data().team)
-          // console.log(doc.data().team)
+          return
         }
       });
     });
+  }
+
+  getUserData = () => {
+    let self = this
+    console.log(this.state.teamID)
+    if (this.state.teamID === null || this.state.teamID === undefined) return
+    firestore.collection(this.state.teamID).doc(this.state.uid).onSnapshot((snapshot) => {
+      self.setState({
+        userData: snapshot.data()
+      })
+    })
   }
 
   getUserFromsessionStorage() {
@@ -68,17 +80,23 @@ class App extends Component {
   getTeamIDFromSessionStorage = () => {
     const teamID = sessionStorage.getItem('teamID');
     if (!teamID) return;
-    this.setState({teamID: teamID});
+    this.setState({teamID: teamID}, () => {
+      this.getUserData()
+    });
   }
 
   setTeamIDFromState = (teamID) => {
     sessionStorage.setItem('teamID', teamID)
-    this.setState({teamID: teamID});
+    this.setState({teamID: teamID}, () => {
+      this.getUserData()
+    });
   }
 
   authHandler = (user) => {
     sessionStorage.setItem('uid', user.uid);
-    this.setState({uid: user.uid, user: user})
+    this.setState({uid: user.uid, user: user}, () => {
+      this.getTeamIDFromFirebase();
+    })
   };
 
   signedIn = () => {
@@ -89,6 +107,7 @@ class App extends Component {
     const data = {
       user: this.state.user,
       uid: this.state.uid,
+      userData: this.state.userData,
       teamID: this.state.teamID,
     }
 

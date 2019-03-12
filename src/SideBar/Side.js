@@ -24,8 +24,10 @@ class Side extends Component {
     };
         //handles user logout
     handleSignOut = () => {
-        localStorage.removeItem('uid')
+        sessionStorage.removeItem('uid')
         sessionStorage.removeItem('user')
+        sessionStorage.removeItem('teamID')
+
         this.firebaseOut()
         window.location.reload()
     };
