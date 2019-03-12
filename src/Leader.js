@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 
 // import {Input, Button} from 'mdbreact';
+import PersonBox from './PersonBox'
 
 class Leader extends Component {
 
   render() {
     return (
-      <p>Leader</p>
+      <PersonBox />
     );
   }
 }
