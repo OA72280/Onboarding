@@ -3,8 +3,9 @@ import './CreateUser.css';
 
 import {Input, Button} from 'mdbreact';
 import {Form, Row, Col, Alert} from 'reactstrap';
+import DropZone from 'react-drop-zone'
 
-import {fireauth, firestore} from '../base';
+import {fireauth, firestore, firestorage} from '../base';
 // import {database} from './base';
 
 class CreateUser extends Component {
@@ -17,6 +18,9 @@ class CreateUser extends Component {
       visible: false,
       message: '',
       checked: false,
+
+      uploadedImage: '',
+      showImageDrop: true,
     };
   }
 
@@ -54,30 +58,45 @@ class CreateUser extends Component {
 
             let code = this.makeid(6)
 
-            self.props.setTeamIDFromState(code)
+            this.props.setTeamIDFromState(code)
 
             firestore.collection(code).doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
               leader: true,
+              team: code,
+              tasks: {
+                'Complete I9': 0,
+                'Order Buisness Phone': 0,
+                'Dell Technologies Advantage' : 0,
+              },
+              picture: self.state.uploadedImage,
             })
 
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
-              leader: false, 
+              leader: true, 
               team: code,
+              picture: self.state.uploadedImage,
             })
 
           // Not Team Leader
           } else {
 
-            self.props.setTeamIDFromState(target.teamCode.value)
+            this.props.setTeamIDFromState(target.teamCode.value)
 
             firestore.collection(target.teamCode.value).doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
               leader: false, 
+              team: target.teamCode.value,
+              tasks: {
+                'Complete I9': 0,
+                'Order Buisness Phone': 0,
+                'Dell Technologies Advantage' : 0,
+              },
+              picture: self.state.uploadedImage,
             })
 
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
@@ -85,6 +104,7 @@ class CreateUser extends Component {
               email: target.email.value,
               leader: false, 
               team: target.teamCode.value,
+              picture: self.state.uploadedImage,
             })
 
           }
@@ -128,6 +148,29 @@ class CreateUser extends Component {
     })
   }
 
+  makeid = () => {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+    for (var i = 0; i < 10; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    
+    return text;
+  }
+
+  handleImage = (file, text) => {
+    let self = this
+    var portImageRef = firestorage.child(`user/${file.name}${this.makeid()}`);
+    portImageRef.put(file).then(function(snapshot) {
+      snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          self.setState({
+            uploadedImage: downloadURL,
+            showImageDrop: false,
+        })
+      });
+    })
+  }
+
   render() {
     return (
       <section className="container">
@@ -164,6 +207,29 @@ class CreateUser extends Component {
                   <Input name='teamCode' label="Team Code" />
                 :
                   null
+              }
+
+              {this.state.uploadedImage === '' ?
+                <DropZone onDrop={(file, text) => this.handleImage(file, text)}>
+                {({ over, overDocument }) =>
+                  <div className='drop-zone'>
+                    {
+                      over ?
+                        'We got the Image, Let it go!' :
+                      overDocument ?
+                        'Please Place the Image in the Gray Box' :
+                        'Upload An Image'
+                    }
+                  </div>
+                }
+                </DropZone>
+              :
+                <Row>
+                  <Col>
+                    <img className='droppedImage' style={{width: '100px'}} alt='img' src={this.state.uploadedImage} />  
+                  </Col>
+                  <br />
+                </Row>
               }
 
               <input onChange={this.toggleCheckbox} defaultChecked={this.state.checked} type="checkbox" /> Team Leader

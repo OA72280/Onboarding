@@ -136,7 +136,7 @@ class Home extends Component {
         if (this.props.page === 'calendar') {
           PageRequested = <CalendarPage />
         } else { 
-          PageRequested = <Student {...data}/>
+          PageRequested = <Student/>
         }
       } else {
         PageRequested = <Leader {...data}/>

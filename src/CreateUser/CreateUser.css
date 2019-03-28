@@ -10,6 +10,16 @@ article {
     transform: translateY(-50%);
 }
 
+.drop-zone {
+    border: 3px dotted #3287c1;  
+    border-radius: 10px;
+    margin: 1em;
+    background-color: lightgray;
+    text-align: center;
+    font-size: 20px;
+    padding: 3em;
+  }
+
 .text {
     font-size: 1.2em;
     color: darkgrey;

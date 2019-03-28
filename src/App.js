@@ -58,10 +58,13 @@ class App extends Component {
     });
   }
 
-  getUserData = () => {
+  getUserData = (teamID) => {
     let self = this
-    if (this.state.teamID === null || this.state.teamID === undefined) return
-    firestore.collection(this.state.teamID).doc(this.state.uid).onSnapshot((snapshot) => {
+    if (teamID === null || teamID === undefined) return
+    if (this.state.uid === null || this.state.uid === undefined) return
+    console.log(teamID)
+    console.log(this.state.uid)
+    firestore.collection(teamID).doc(this.state.uid).onSnapshot((snapshot) => {
       self.setState({
         userData: snapshot.data()
       })
@@ -79,16 +82,14 @@ class App extends Component {
   getTeamIDFromSessionStorage = () => {
     const teamID = sessionStorage.getItem('teamID');
     if (!teamID) return;
-    this.setState({teamID: teamID}, () => {
-      this.getUserData()
-    });
+    this.setState({teamID: teamID});
+    this.getUserData(teamID);
   }
 
   setTeamIDFromState = (teamID) => {
-    sessionStorage.setItem('teamID', teamID)
-    this.setState({teamID: teamID}, () => {
-      this.getUserData()
-    });
+    sessionStorage.setItem("teamID", teamID);
+    this.setState({teamID: teamID});
+    this.getUserData(teamID);
   }
 
   authHandler = (user) => {
