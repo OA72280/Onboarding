@@ -22,7 +22,7 @@ class TaskBox extends Component {
 
         </div>
         
-        <img className='circle z-depth-3' alt="i9" src={Angela} />
+        <img className='circle z-depth-3' alt="i9" src={this.props.data.picture} />
 
         <p className='name'>{this.props.data.name}</p>
 
