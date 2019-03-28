@@ -24,23 +24,29 @@ class TaskBox extends Component {
         
         <img className='circle z-depth-3' alt="i9" src={Angela} />
 
-        <p className='name'>Angela Brown</p>
+        <p className='name'>{this.props.data.name}</p>
 
         <br />
 
-        <p>
-          <i style={{color: 'green', paddingRight: '10px'}} className="fas fa-check-square"></i>
-          Complete i9
-        </p>
-        <p>
-          <i style={{color: 'orange', paddingRight: '10px'}} className="fas fa-check-square"></i>
-          Order Buisness Phone
-        </p>
-        <p>
-          <i style={{color: 'red', paddingRight: '10px'}} className="fas fa-check-square"></i>
-          Dell Technologies Advantage
-        </p>
-      
+        {Object.keys(this.props.data.tasks).map((data) => {
+          let value = this.props.data.tasks[data];
+          let color = 'red'
+
+          if (value === 0) 
+            color = 'red'
+          else if (value === 1) 
+            color = 'orange'
+          else 
+            color = 'green'
+          
+
+          return (
+            <p key={data}>
+              <i style={{color: `${color}`, paddingRight: '10px'}} className="fas fa-check-square"></i>
+              {data}
+            </p>
+          )
+        })}
 
       </div>
     );

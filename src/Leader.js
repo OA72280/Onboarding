@@ -28,13 +28,20 @@ class Leader extends Component {
   }  
 
   render() {
+    const userData = {
+      user: this.props.user,
+      uid: this.props.uid,
+      userData: this.props.userData,
+      teamID: this.props.teamID,
+    }
+
     return (
       <Row>
         {this.state.users !== null ?
           Object.keys(this.state.users).map((data) => {
             return ( 
-              <Col sm='3'>
-                <PersonBox key={data}/> 
+              <Col key={data} sm='3'>
+                <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
               </Col>
             )
           })
