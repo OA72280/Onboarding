@@ -120,7 +120,13 @@ class Home extends Component {
       onSetOpen: this.onSetSidebarOpen,
     };
 
-  
+    const data = {
+      user: this.props.user,
+      uid: this.props.uid,
+      userData: this.props.userData,
+      teamID: this.props.teamID,
+    }
+
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
     
@@ -130,10 +136,10 @@ class Home extends Component {
         if (this.props.page === 'calendar') {
           PageRequested = <CalendarPage />
         } else { 
-          PageRequested = <Student />
+          PageRequested = <Student {...data}/>
         }
       } else {
-        PageRequested = <Leader />
+        PageRequested = <Leader {...data}/>
       }
     } else {
       PageRequested = null
