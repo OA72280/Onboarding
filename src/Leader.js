@@ -39,11 +39,12 @@ class Leader extends Component {
       <Row>
         {this.state.users !== null ?
           Object.keys(this.state.users).map((data) => {
-            return ( 
-              <Col key={data} sm='3'>
-                <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
-              </Col>
-            )
+            if (!this.state.users[data].leader) {
+              return ( 
+                <Col key={data} sm='3'>
+                  <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
+                </Col>
+              )}
           })
         : 
           null
