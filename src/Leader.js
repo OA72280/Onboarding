@@ -44,7 +44,10 @@ class Leader extends Component {
                 <Col key={data} sm='3'>
                   <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
                 </Col>
-              )}
+              )
+            } else {
+              return null
+            }
           })
         : 
           null

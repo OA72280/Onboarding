@@ -5,12 +5,16 @@ import Side from './SideBar/Side.js'
 import CalendarPage from './CalendarPage.js';
 import Leader from './Leader'
 import Student from './Student'
+import 'react-datepicker/dist/react-datepicker.css';
 
+import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact";
 // import {firestore} from './base.js'
 import {Row, Col} from 'reactstrap'
+import DatePicker from 'react-datepicker'
 // import {Redirect} from 'react-router-dom';
 
 import './Home.css'
+import moment from 'moment';
 
 const mql = window.matchMedia(`(min-width: 600px)`)
 
@@ -26,6 +30,10 @@ class Home extends Component {
       docked: props.docked,
       open: props.open,
       userData: null,
+
+      newTask: false,
+      taskName: '',
+      dueDate: new Date(),
     };
   }
 
@@ -38,15 +46,26 @@ class Home extends Component {
       sidebarDocked: mql.matches,
     })
   }
-  
-  /**
-   * 
-   * Remove sizing listener
-   * 
-   */
-  // componentWillUnMount() {
-  //   window.removeEventListener('resize', this.handleWindowChange)
-  // }
+
+  handleNewTask = () => {
+    console.log('New task saved!')
+  }
+
+  toggleNewTask = () => { 
+    this.setState({newTask: !this.state.newTask}) 
+  }
+
+  handleTaskName = (ev) => {
+    this.setState({
+      taskName: ev.target.value
+    })
+  }
+
+  handleDueDate = (date) => {
+    this.setState({
+      dueDate: date
+    })
+  }
 
   /**
    *
@@ -149,8 +168,35 @@ class Home extends Component {
     return (
       <Sidebar {...sideData}> 
 
+        <Modal isOpen={this.state.newTask} size="sm" toggle={this.toggleNewTask} centered backdrop={false}>   
+          <CardHeader className='gradient' color="info-color-dark lighten-1"></CardHeader>
+            <CardBody>                   
+              <CardTitle className='previewText'>New Task</CardTitle>  
+
+              <Input onChange={(ev) => this.handleTaskName(ev)} value={this.state.taskName} name='name' label='Enter Task Name' />
+              
+              {/* <DatePicker value={this.state.dueDate.toString()}
+                              id="dueDate" selected={this.state.dueDate}
+                              onChange={this.handleDueDate} showTimeSelect
+                              dateFormat="LLL"/> */}
+              <DatePicker
+                selected={this.state.dueDate}
+                onChange={this.handleDueDate}
+              />
+
+              {/* <Input onChange={(ev) => this.handleTaskDate(ev)} value={this.state.taskDate} name='date' label='Enter Task Date' /> */}
+
+            </CardBody>
+
+            <ModalFooter>
+                <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewTask}>Exit</Button>{' '}
+                <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewTask}> Save</Button>
+            </ModalFooter>
+          </Modal>
+
         <Row>
           <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
+          <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Client Team</Button>    
         </Row>
 
         <hr/>

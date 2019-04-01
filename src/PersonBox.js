@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import './TaskBox.css'
 
-import Angela from './Angela.jpeg';
-
 class TaskBox extends Component {
 
   constructor(props) {

@@ -62,8 +62,6 @@ class App extends Component {
     let self = this
     if (teamID === null || teamID === undefined) return
     if (this.state.uid === null || this.state.uid === undefined) return
-    console.log(teamID)
-    console.log(this.state.uid)
     firestore.collection(teamID).doc(this.state.uid).onSnapshot((snapshot) => {
       self.setState({
         userData: snapshot.data()
