@@ -2,12 +2,9 @@ import React, {Component} from 'react';
 import './TaskBox.css'
 
 import {Row, Col} from 'reactstrap';
+import {firestore} from './base';
 
 import Select from 'react-select'
-import {firestore} from './base';
-import iNine from './i9.png';
-
-// import firebase from './base';
 
 class TaskBox extends Component {
 
@@ -54,25 +51,17 @@ class TaskBox extends Component {
   }
 
   render() {
-
-
     const options = [
       { value: 'Not Started', label: 'Not Started' },
       { value: 'In Progress', label: 'In Progress' },
       { value: 'Complete', label: 'Complete' }
     ]
-    // const { selectedOption } = this.state;
-
   
     return (
       <div className="clientBox z-depth-5">
 
-        <div className={`clientColorbox ${this.state.color}`}>
-
-        </div>
+        <div className={`clientColorbox ${this.state.color}`}></div>
         
-        {/* <img className='circle z-depth-3' alt="i9" src={iNine} /> */}
-
         <p className='name'>{this.props.data.taskName}</p>
 
         <hr className='clientHR' />
