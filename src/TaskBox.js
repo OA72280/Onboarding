@@ -20,6 +20,18 @@ class TaskBox extends Component {
     }
   }
 
+  componentWillMount = () => {
+    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
+      if (doc.data().tasks[this.props.id].completion === 0) {
+        this.setState({ selectedOption: { value: 'Not Started', label: 'Not Started' }, color: "redGrad"});
+      } else if (doc.data().tasks[this.props.id].completion === 1) {
+        this.setState({ selectedOption: { value: 'In Progress', label: 'In Progress' }, color: "dropdownColor"});
+      } else {
+        this.setState({ selectedOption: { value: 'Complete', label: 'Complete' }, color: "greenGrad"});
+      }
+    });
+  } 
+
   handleChange = (selectedOption) => {
     let completion = 0
     if (selectedOption.value === 'Not Started') {
