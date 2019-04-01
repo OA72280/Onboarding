@@ -4,6 +4,7 @@ import './TaskBox.css'
 import {Row, Col} from 'reactstrap';
 
 import Select from 'react-select'
+import {firestore} from './base';
 import iNine from './i9.png';
 
 // import firebase from './base';
@@ -20,13 +21,24 @@ class TaskBox extends Component {
   }
 
   handleChange = (selectedOption) => {
+    let completion = 0
     if (selectedOption.value === 'Not Started') {
       this.setState({ selectedOption: selectedOption, color: "redGrad"});
+      completion = 0
     } else if (selectedOption.value === "In Progress") {
       this.setState({ selectedOption: selectedOption, color: 'dropdownColor'});
+      completion = 1
     } else if (selectedOption.value === "Complete") {
       this.setState({ selectedOption: selectedOption, color: 'greenGrad' });
+      completion = 2
     }
+
+    firestore.collection(this.props.teamID).doc(this.props.uid).get().then((doc) => {
+      let oldTasks = doc.data().tasks
+      oldTasks[this.props.id].completion = completion
+      firestore.collection(this.props.teamID).doc(this.props.uid).update({tasks: oldTasks})
+    });
+
   }
 
   render() {
