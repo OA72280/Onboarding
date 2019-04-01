@@ -30,18 +30,18 @@ class TaskBox extends Component {
           let value = this.props.data.tasks[data];
           let color = 'red'
 
-          if (value === 0) 
+          if (value.completion === 0) 
             color = 'red'
-          else if (value === 1) 
+          else if (value.completion === 1) 
             color = 'orange'
           else 
             color = 'green'
           
 
           return (
-            <p key={data}>
+            <p key={value.taskName}>
               <i style={{color: `${color}`, paddingRight: '10px'}} className="fas fa-check-square"></i>
-              {data}
+              {value.taskName}
             </p>
           )
         })}

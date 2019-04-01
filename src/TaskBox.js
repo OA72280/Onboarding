@@ -31,6 +31,7 @@ class TaskBox extends Component {
 
   render() {
 
+
     const options = [
       { value: 'Not Started', label: 'Not Started' },
       { value: 'In Progress', label: 'In Progress' },
@@ -48,7 +49,7 @@ class TaskBox extends Component {
         
         {/* <img className='circle z-depth-3' alt="i9" src={iNine} /> */}
 
-        <p className='name'>Complete I9</p>
+        <p className='name'>{this.props.data.taskName}</p>
 
         <hr className='clientHR' />
 
@@ -68,7 +69,7 @@ class TaskBox extends Component {
 
         <div>
           <i className="fas fa-calendar-alt" />
-          <p>Due 03/15/2018</p>
+          {/* <p>Due {new Date(this.props.data.dueDate.seconds).toDateString()}</p> */}
         </div>
 
       </div>

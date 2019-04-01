@@ -66,9 +66,7 @@ class CreateUser extends Component {
               leader: true,
               team: code,
               tasks: {
-                'Complete I9': 0,
-                'Order Buisness Phone': 0,
-                'Dell Technologies Advantage' : 0,
+          
               },
               picture: self.state.uploadedImage,
             })
@@ -91,11 +89,7 @@ class CreateUser extends Component {
               email: target.email.value,
               leader: false, 
               team: target.teamCode.value,
-              tasks: {
-                'Complete I9': 0,
-                'Order Buisness Phone': 0,
-                'Dell Technologies Advantage' : 0,
-              },
+              tasks: {},
               picture: self.state.uploadedImage,
             })
 

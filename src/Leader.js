@@ -19,7 +19,7 @@ class Leader extends Component {
 
     let users = {}
 
-    firestore.collection(this.props.teamID).get().then((querySnapshot) => {
+    firestore.collection(this.props.teamID).onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           users[doc.id] = doc.data()
           self.setState({users: users})

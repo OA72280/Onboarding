@@ -49,10 +49,15 @@ class Home extends Component {
   }
 
   handleNewTask = () => {
-    firestore.collection(this.props.teamID).get().then((querySnapshot) => {
+    let id = this.makeid(10)
+    firestore.collection(this.props.teamID).onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           let oldTasks = doc.data().tasks
-          oldTasks[this.state.taskName] = this.state.dueDate
+          oldTasks[id] = { 
+            dueDate: this.state.dueDate,
+            completion: 0,
+            taskName: this.state.taskName,
+          }
           firestore.collection(this.props.teamID).doc(doc.id).update({tasks: oldTasks})
       });
     });
@@ -73,6 +78,16 @@ class Home extends Component {
     this.setState({
       dueDate: date
     })
+  }
+
+  makeid = (size) => {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+    for (var i = 0; i < size; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    
+    return text;
   }
 
   /**
@@ -163,7 +178,7 @@ class Home extends Component {
         if (this.props.page === 'calendar') {
           PageRequested = <CalendarPage />
         } else { 
-          PageRequested = <Student/>
+          PageRequested = <Student {...data}/>
         }
       } else {
         PageRequested = <Leader {...data}/>

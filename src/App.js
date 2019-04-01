@@ -48,7 +48,7 @@ class App extends Component {
 
   getTeamIDFromFirebase = () => {
     let self = this
-    firestore.collection("peopleData").get().then(function(querySnapshot) {
+    firestore.collection("peopleData").onSnapshot((querySnapshot) => {
       querySnapshot.forEach(function(doc) {
         if(self.state.uid === doc.id) {
           self.setTeamIDFromState(doc.data().team)
