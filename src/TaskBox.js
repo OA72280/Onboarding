@@ -81,7 +81,7 @@ class TaskBox extends Component {
 
         <div>
           <i className="fas fa-calendar-alt" />
-          {/* <p>Due {new Date(this.props.data.dueDate.seconds).toDateString()}</p> */}
+          <p>Due {new Date(this.props.data.dueDate.seconds * 1000).toLocaleDateString()}</p>
         </div>
 
       </div>
