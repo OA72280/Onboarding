@@ -46,7 +46,7 @@ class TaskBox extends Component {
 
         </div>
         
-        <img className='circle z-depth-3' alt="i9" src={iNine} />
+        {/* <img className='circle z-depth-3' alt="i9" src={iNine} /> */}
 
         <p className='name'>Complete I9</p>
 

@@ -174,17 +174,11 @@ class Home extends Component {
               <CardTitle className='previewText'>New Task</CardTitle>  
 
               <Input onChange={(ev) => this.handleTaskName(ev)} value={this.state.taskName} name='name' label='Enter Task Name' />
-              
-              {/* <DatePicker value={this.state.dueDate.toString()}
-                              id="dueDate" selected={this.state.dueDate}
-                              onChange={this.handleDueDate} showTimeSelect
-                              dateFormat="LLL"/> */}
+  
               <DatePicker
                 selected={this.state.dueDate}
                 onChange={this.handleDueDate}
               />
-
-              {/* <Input onChange={(ev) => this.handleTaskDate(ev)} value={this.state.taskDate} name='date' label='Enter Task Date' /> */}
 
             </CardBody>
 
