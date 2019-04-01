@@ -11,6 +11,7 @@ import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from
 // import {firestore} from './base.js'
 import {Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
+import {firestore} from './base';
 // import {Redirect} from 'react-router-dom';
 
 import './Home.css'
@@ -48,7 +49,14 @@ class Home extends Component {
   }
 
   handleNewTask = () => {
-    console.log('New task saved!')
+    firestore.collection(this.props.teamID).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          let oldTasks = doc.data().tasks
+          oldTasks[this.state.taskName] = this.state.dueDate
+          firestore.collection(this.props.teamID).doc(doc.id).update({tasks: oldTasks})
+      });
+    });
+    this.toggleNewTask()
   }
 
   toggleNewTask = () => { 
