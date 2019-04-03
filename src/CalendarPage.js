@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './TaskBox.css'
 
 import {Row, Col} from 'reactstrap';
+import {firestore} from './base';
 
 import BigCalendar from 'react-big-calendar'
 import '../node_modules/react-big-calendar/lib/css/react-big-calendar.css';
@@ -9,18 +10,54 @@ import moment from 'moment'
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer
 
-// import firebase from './base';
-
-class TaskBox extends Component {
+class CalendarPage extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      dates: [],
+      dates: [
+        {
+          allDay: true,
+          end: new Date('April 8, 2019 11:59:00'),
+          start: new Date('April 8, 2019 11:59:00'),
+          title: 'I9 Paper',
+        },
+        {
+          allDay: true,
+          end: new Date('April 22, 2019 11:13:00'),
+          start: new Date('April 22, 2019 11:13:00'),
+          title: 'Dell Technolgies Advantage',
+        },
+      ],
     }
   }
 
+  componentWillMount = () => {
+    this.getCalendarEvents()
+  }
+
+  getCalendarEvents = () => {
+    let self = this
+    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
+      Object.keys(doc.data().tasks).map((data) => {
+        let task = doc.data().tasks[data]
+        console.log(task.dueDate)
+
+        let tmp = this.state.dates
+        tmp.push({
+          title: task.taskName,
+          start: new Date(task.dueDate.seconds * 1000),
+          end: new Date(task.dueDate.seconds * 1000),
+        })
+
+        self.setState({
+          dates: tmp
+        })
+      })
+    });
+  }
+  
   eventStyleGetter = () => {
     return {
       style: {
@@ -35,24 +72,22 @@ class TaskBox extends Component {
       height: "60em",
     };
 
-    const dummyEvents = [
-      {
-        allDay: true,
-        end: new Date('March 8, 2019 11:59:00'),
-        start: new Date('March 8, 2019 11:59:00'),
-        title: 'I9 Paper',
-      },
-      {
-        allDay: true,
-        end: new Date('March 22, 2019 11:13:00'),
-        start: new Date('March 22, 2019 11:13:00'),
-        title: 'Dell Technolgies Advantage',
-      },
-    ];
+    // const dummyEvents = [
+    //   {
+    //     allDay: true,
+    //     end: new Date('April 8, 2019 11:59:00'),
+    //     start: new Date('April 8, 2019 11:59:00'),
+    //     title: 'I9 Paper',
+    //   },
+    //   {
+    //     allDay: true,
+    //     end: new Date('April 22, 2019 11:13:00'),
+    //     start: new Date('April 22, 2019 11:13:00'),
+    //     title: 'Dell Technolgies Advantage',
+    //   },
+    // ];
   
     return (
-      // <div className="clientBox z-depth-5">
-
         <Row>
           <Col md="1"/>
           <Col md="10">
@@ -60,7 +95,7 @@ class TaskBox extends Component {
               localizer={localizer}
               // toolbar={false}
               selectable
-              events={dummyEvents}
+              events={this.state.dates}
               style={calendarStyles}
               defaultDate={new Date()}
               eventPropGetter={(this.eventStyleGetter)}
@@ -69,11 +104,8 @@ class TaskBox extends Component {
           </Col>
           <Col md="1"/>
         </Row>
-        
-
-      // </div>
-    );
+      );
   }
 }
 
-export default TaskBox;
+export default CalendarPage;
