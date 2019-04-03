@@ -15,7 +15,7 @@ import {firestore} from './base';
 // import {Redirect} from 'react-router-dom';
 
 import './Home.css'
-import moment from 'moment';
+// import moment from 'moment';
 
 const mql = window.matchMedia(`(min-width: 600px)`)
 
@@ -174,12 +174,10 @@ class Home extends Component {
     
     let PageRequested;   
     if (this.props.userData !== null) {
-      if (!this.props.userData.leader) {
-        if (this.props.page === 'calendar') {
-          PageRequested = <CalendarPage {...data}/>
-        } else { 
-          PageRequested = <Student {...data}/>
-        }
+      if (this.props.page === 'calendar') {
+        PageRequested = <CalendarPage {...data}/>
+      } else if (!this.props.userData.leader) {
+        PageRequested = <Student {...data}/>
       } else {
         PageRequested = <Leader {...data}/>
       }
@@ -213,7 +211,13 @@ class Home extends Component {
 
         <Row>
           <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
-          <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Client Team</Button>    
+         
+          {this.props.userData !== null && this.props.userData.leader ?
+            <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Task</Button>              
+          :
+            null
+          }
+
         </Row>
 
         <hr/>

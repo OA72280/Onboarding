@@ -13,12 +13,6 @@ class TaskBox extends Component {
 
   render() {
 
-    console.log((Object.keys(this.props.data.tasks).length * 5) + 'em')
-    let tmp = Object.keys(this.props.data.tasks).length * 5 + 'em'
-    let tmp2 = '25em'
-    console.log(tmp)
-    console.log(tmp2)
-
     return (
       <div style={{overflow: 'scroll'}} className="clientBox z-depth-5">
 
@@ -45,9 +39,9 @@ class TaskBox extends Component {
           
 
           return (
-            <div>
+            <div key={value.taskName}>
               <i style={{color: `${color}`, float: 'left', paddingTop: '5px', paddingLeft: '20px'}} className="fas fa-check-square"></i>
-              <p key={value.taskName}>
+              <p>
                 {value.taskName}
               </p>
             </div>

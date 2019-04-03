@@ -42,7 +42,6 @@ class CalendarPage extends Component {
     firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
       Object.keys(doc.data().tasks).map((data) => {
         let task = doc.data().tasks[data]
-        console.log(task.dueDate)
 
         let tmp = this.state.dates
         tmp.push({
@@ -54,6 +53,8 @@ class CalendarPage extends Component {
         self.setState({
           dates: tmp
         })
+
+        return null
       })
     });
   }
