@@ -58,11 +58,11 @@ class TaskBox extends Component {
     ]
   
     return (
-      <div className="clientBox z-depth-5">
+      <div style={{overflow: 'scroll'}} className="clientBox z-depth-5">
 
         <div className={`clientColorbox ${this.state.color}`}></div>
         
-        <p className='name'>{this.props.data.taskName}</p>
+        <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.data.taskName}</p>
 
         <hr className='clientHR' />
 
