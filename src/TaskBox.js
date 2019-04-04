@@ -15,18 +15,16 @@ class TaskBox extends Component {
       selectedOption: { value: 'Not Started', label: 'Not Started' },
       color: 'redGrad',
     }
-  }
+  } 
 
   componentWillMount = () => {
-    // firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
-      if (this.props.data.completion === 0) {
-        this.setState({ selectedOption: { value: 'Not Started', label: 'Not Started' }, color: "redGrad"});
-      } else if (this.props.data.completion === 1) {
-        this.setState({ selectedOption: { value: 'In Progress', label: 'In Progress' }, color: "dropdownColor"});
-      } else {
-        this.setState({ selectedOption: { value: 'Complete', label: 'Complete' }, color: "greenGrad"});
-      }
-    // });
+    if (this.props.task.completion === 0) {
+      this.setState({ selectedOption: { value: 'Not Started', label: 'Not Started' }, color: "redGrad"});
+    } else if (this.props.task.completion === 1) {
+      this.setState({ selectedOption: { value: 'In Progress', label: 'In Progress' }, color: "dropdownColor"});
+    } else {
+      this.setState({ selectedOption: { value: 'Complete', label: 'Complete' }, color: "greenGrad"});
+    }
   } 
 
   handleChange = (selectedOption) => {
@@ -43,7 +41,12 @@ class TaskBox extends Component {
     }
 
     let oldTasks = this.props.tasks
-    oldTasks[this.props.id].completion = completion
+    oldTasks.map((data) => {
+      if (data.taskName === this.props.task.taskName)
+        return data.completion = completion
+      else 
+        return null
+    })
     firestore.collection(this.props.teamID).doc(this.props.uid).update({tasks: oldTasks})
 
   }
@@ -60,7 +63,7 @@ class TaskBox extends Component {
 
         <div className={`clientColorbox ${this.state.color}`}></div>
         
-        <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.data.taskName}</p>
+        <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.task.taskName}</p>
 
         <hr className='clientHR' />
 
@@ -80,7 +83,7 @@ class TaskBox extends Component {
 
         <div>
           <i className="fas fa-calendar-alt" />
-          <p>Due {new Date(this.props.data.dueDate.seconds * 1000).toLocaleDateString()}</p>
+          <p>Due {new Date(this.props.task.dueDate.seconds * 1000).toLocaleDateString()}</p>
         </div>
 
       </div>

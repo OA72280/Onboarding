@@ -65,9 +65,7 @@ class CreateUser extends Component {
               email: target.email.value,
               leader: true,
               team: code,
-              tasks: {
-          
-              },
+              tasks: [],
               picture: self.state.uploadedImage,
             })
 
@@ -89,7 +87,7 @@ class CreateUser extends Component {
               email: target.email.value,
               leader: false, 
               team: target.teamCode.value,
-              tasks: {},
+              tasks: [],
               picture: self.state.uploadedImage,
             })
 

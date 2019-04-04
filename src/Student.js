@@ -37,10 +37,10 @@ class Student extends Component {
     return (
       <Row>
         {this.state.tasks !== null ?
-          Object.keys(this.state.tasks).map((data) => {
+          this.state.tasks.map((task, id) => {
               return ( 
-                <Col key={data} sm='3'>
-                  <TaskBox tasks={this.state.tasks} data={this.state.tasks[data]} id={data} key={data} {...userData}/> 
+                <Col key={id} sm='3'>
+                  <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
                 </Col>
               )            
           })

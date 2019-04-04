@@ -49,15 +49,15 @@ class Home extends Component {
   }
 
   handleNewTask = () => {
-    let id = this.makeid(10)
+    // let id = this.makeid(10)
     firestore.collection(this.props.teamID).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           let oldTasks = doc.data().tasks
-          oldTasks[id] = { 
+          oldTasks.push({ 
             dueDate: this.state.dueDate,
             completion: 0,
             taskName: this.state.taskName,
-          }
+          })
           firestore.collection(this.props.teamID).doc(doc.id).update({tasks: oldTasks})
       });
     });
