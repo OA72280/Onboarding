@@ -38,7 +38,7 @@ class Student extends Component {
           Object.keys(this.state.tasks).map((data) => {
               return ( 
                 <Col key={data} sm='3'>
-                  <TaskBox data={this.state.tasks[data]} id={data} key={data} {...userData}/> 
+                  <TaskBox tasks={this.state.tasks} data={this.state.tasks[data]} id={data} key={data} {...userData}/> 
                 </Col>
               )            
           })

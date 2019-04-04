@@ -18,15 +18,15 @@ class TaskBox extends Component {
   }
 
   componentWillMount = () => {
-    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
-      if (doc.data().tasks[this.props.id].completion === 0) {
+    // firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
+      if (this.props.data.completion === 0) {
         this.setState({ selectedOption: { value: 'Not Started', label: 'Not Started' }, color: "redGrad"});
-      } else if (doc.data().tasks[this.props.id].completion === 1) {
+      } else if (this.props.data.completion === 1) {
         this.setState({ selectedOption: { value: 'In Progress', label: 'In Progress' }, color: "dropdownColor"});
       } else {
         this.setState({ selectedOption: { value: 'Complete', label: 'Complete' }, color: "greenGrad"});
       }
-    });
+    // });
   } 
 
   handleChange = (selectedOption) => {
@@ -42,11 +42,11 @@ class TaskBox extends Component {
       completion = 2
     }
 
-    firestore.collection(this.props.teamID).doc(this.props.uid).get().then((doc) => {
-      let oldTasks = doc.data().tasks
-      oldTasks[this.props.id].completion = completion
-      firestore.collection(this.props.teamID).doc(this.props.uid).update({tasks: oldTasks})
-    });
+    let oldTasks = this.props.tasks
+    oldTasks[this.props.id].completion = completion
+    console.log(this.props.teamID)
+    console.log(this.props.uid)
+    firestore.collection(this.props.teamID).doc(this.props.uid).update({tasks: oldTasks})
 
   }
 

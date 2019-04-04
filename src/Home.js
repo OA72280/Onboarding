@@ -50,7 +50,7 @@ class Home extends Component {
 
   handleNewTask = () => {
     let id = this.makeid(10)
-    firestore.collection(this.props.teamID).onSnapshot((querySnapshot) => {
+    firestore.collection(this.props.teamID).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           let oldTasks = doc.data().tasks
           oldTasks[id] = { 
