@@ -21,10 +21,12 @@ class Student extends Component {
 
     if (this.props.teamID === null || this.props.teamID === undefined) return
     firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
-      self.setState({tasks: doc.data().tasks})
+      self.setState({tasks: doc.data().tasks}, () => {
+        // self.sortDates();
+      })
     });
   }
-
+  
   render() {
     const userData = {
       user: this.props.user,

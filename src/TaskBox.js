@@ -44,8 +44,6 @@ class TaskBox extends Component {
 
     let oldTasks = this.props.tasks
     oldTasks[this.props.id].completion = completion
-    console.log(this.props.teamID)
-    console.log(this.props.uid)
     firestore.collection(this.props.teamID).doc(this.props.uid).update({tasks: oldTasks})
 
   }
@@ -58,7 +56,7 @@ class TaskBox extends Component {
     ]
   
     return (
-      <div style={{overflow: 'scroll'}} className="clientBox z-depth-5">
+      <div className="clientBox z-depth-5">
 
         <div className={`clientColorbox ${this.state.color}`}></div>
         
