@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/launch/static/js/runtime~main.1bd9ad73.js"
   },
   {
-    "revision": "e31fcf1885e371e19f5786c2bdfeae1b",
-    "url": "/launch/static/media/Roboto-Bold.e31fcf18.ttf"
+    "revision": "df7b648ce5356ea1ebce435b3459fd60",
+    "url": "/launch/static/media/Roboto-Regular.df7b648c.ttf"
   },
   {
     "revision": "76cf230f44d480825c28",
@@ -52,12 +52,12 @@ self.__precacheManifest = [
     "url": "/launch/static/media/arrow_right.8ef6a08c.svg"
   },
   {
-    "revision": "a990f611f2305dc12965f186c2ef2690",
-    "url": "/launch/static/media/Roboto-Light.a990f611.eot"
-  },
-  {
     "revision": "dfe56a876d0282555d1e2458e278060f",
     "url": "/launch/static/media/Roboto-Thin.dfe56a87.eot"
+  },
+  {
+    "revision": "a990f611f2305dc12965f186c2ef2690",
+    "url": "/launch/static/media/Roboto-Light.a990f611.eot"
   },
   {
     "revision": "30799efa5bf74129468ad4e257551dc3",
@@ -100,16 +100,16 @@ self.__precacheManifest = [
     "url": "/launch/static/media/Roboto-Light.3b813c2a.woff"
   },
   {
+    "revision": "dc81817def276b4f21395f7ea5e88dcd",
+    "url": "/launch/static/media/Roboto-Bold.dc81817d.woff"
+  },
+  {
     "revision": "ba3dcd8903e3d0af5de7792777f8ae0d",
     "url": "/launch/static/media/Roboto-Regular.ba3dcd89.woff"
   },
   {
     "revision": "fc78759e93a6cac50458610e3d9d63a0",
     "url": "/launch/static/media/Roboto-Medium.fc78759e.woff"
-  },
-  {
-    "revision": "dc81817def276b4f21395f7ea5e88dcd",
-    "url": "/launch/static/media/Roboto-Bold.dc81817d.woff"
   },
   {
     "revision": "94998475f6aea65f558494802416c1cf",
@@ -120,12 +120,12 @@ self.__precacheManifest = [
     "url": "/launch/static/media/Roboto-Light.46e48ce0.ttf"
   },
   {
-    "revision": "df7b648ce5356ea1ebce435b3459fd60",
-    "url": "/launch/static/media/Roboto-Regular.df7b648c.ttf"
-  },
-  {
     "revision": "894a2ede85a483bf9bedefd4db45cdb9",
     "url": "/launch/static/media/Roboto-Medium.894a2ede.ttf"
+  },
+  {
+    "revision": "e31fcf1885e371e19f5786c2bdfeae1b",
+    "url": "/launch/static/media/Roboto-Bold.e31fcf18.ttf"
   },
   {
     "revision": "76cf230f44d480825c28",
