@@ -60,11 +60,12 @@ class CreateUser extends Component {
 
             this.props.setTeamIDFromState(code)
 
-            firestore.collection(code).doc(fireauth.currentUser.uid).set({
+            firestore.collection('leaders').doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
               leader: true,
-              team: code,
+              teams: [code],
+              mentors: [],
               tasks: [],
               picture: self.state.uploadedImage,
             })
