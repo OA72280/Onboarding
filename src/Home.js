@@ -127,6 +127,23 @@ class Home extends Component {
     }
   }
 
+  handleSelectionOfEmployee = (person) => {
+    let tmpEmployees = this.state.allEmployees
+    let tmpSelected = this.state.selectedEmployees
+    for (let i in this.state.allEmployees) {
+      if (this.state.allEmployees[i].id === person.id) {
+        
+        // TODO Make load employees load firebase eventually
+        // TODO Not removing first person
+        tmpEmployees.splice(i,i)
+
+        tmpSelected.push(person)
+      }
+    }
+    console.log(tmpEmployees)
+    this.setState({allEmployees: tmpEmployees, selectedEmployees: tmpSelected})
+  }
+
   toggleNewMentor = () => {
     this.getEmployeesFromLeader()
     this.setState({
@@ -141,6 +158,7 @@ class Home extends Component {
   }
 
   toggleNewMentorEdit = (mentorName, mentorLocation, mentorTitle, mentorNotes, mentorPicture, mentorID) => {
+    this.getEmployeesFromLeader()
     this.setState({
       newMentor: !this.state.newMentor,
       mentorName: mentorName,
@@ -382,7 +400,17 @@ class Home extends Component {
   
               <b>Mentees</b>
               <br/>
-              
+              {this.state.selectedEmployees.map((person) => {
+                return (
+                  <Chip
+                    key={person.id}
+                    avatar={<Avatar>{`${person.initals}`}</Avatar>}
+                    label={`${person.name}`}
+                    className={styles.chip}
+                    style={{marginRight: '15px', marginBottom: '10px'}}
+                  />
+                )
+              })}
 
               <hr/>
 
@@ -391,6 +419,7 @@ class Home extends Component {
               {this.state.allEmployees.map((person) => {
                 return (
                   <Chip
+                    onClick={() => this.handleSelectionOfEmployee(person)}
                     key={person.id}
                     avatar={<Avatar>{`${person.initals}`}</Avatar>}
                     label={`${person.name}`}
