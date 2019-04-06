@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './TaskBox.css'
+import './PersonBox.css'
 
 class TaskBox extends Component {
 
@@ -14,7 +14,7 @@ class TaskBox extends Component {
   render() {
 
     return (
-      <div style={{overflow: 'scroll'}} className="clientBox z-depth-5">
+      <div style={{overflowY: 'scroll'}} className="clientBox scrollStuff z-depth-5">
 
         <div className={`clientColorbox ${this.state.color}`}>
 
