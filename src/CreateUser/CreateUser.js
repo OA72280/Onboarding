@@ -70,6 +70,16 @@ class CreateUser extends Component {
               picture: self.state.uploadedImage,
             })
 
+            firestore.collection(code).doc(fireauth.currentUser.uid).set({
+              name: `${target.firstName.value} ${target.lastName.value}`,
+              email: target.email.value,
+              leader: true,
+              teams: [code],
+              mentors: [],
+              tasks: [],
+              picture: self.state.uploadedImage,
+            })
+
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,

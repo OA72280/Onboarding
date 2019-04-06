@@ -58,8 +58,6 @@ class Home extends Component {
       mql: mql,
       sidebarDocked: mql.matches,
     })
-
-    this.getEmployeesFromLeader()
   }
 
   //======================================================== New Task Functions ========================================================

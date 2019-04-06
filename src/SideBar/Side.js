@@ -20,6 +20,8 @@ class Side extends Component {
     firebaseOut = () => {
         fireauth.signOut().then(() => {
             console.log("User Signed out")
+            window.location.reload()
+
         })
     };
         //handles user logout
@@ -29,7 +31,7 @@ class Side extends Component {
         sessionStorage.removeItem('teamID')
 
         this.firebaseOut()
-        window.location.reload()
+        // window.location.reload()
     };
   
     render() {
