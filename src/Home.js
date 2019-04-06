@@ -6,6 +6,8 @@ import CalendarPage from './CalendarPage.js';
 import Leader from './Leader'
 import Student from './Student'
 import Mentors from './Mentors/Mentors'
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact";
@@ -41,9 +43,10 @@ class Home extends Component {
       mentorTitle: '',
       mentorNotes: '',
       mentorPicture: '',
-
       mentorID: null,
 
+      allEmployees: [],
+      selectedEmployees: [],
     };
   }
 
@@ -55,6 +58,8 @@ class Home extends Component {
       mql: mql,
       sidebarDocked: mql.matches,
     })
+
+    this.getEmployeesFromLeader()
   }
 
   //======================================================== New Task Functions ========================================================
@@ -92,7 +97,40 @@ class Home extends Component {
   //======================================================== End New Task Functions ========================================================
 
   //======================================================== New Mentor Functions ========================================================
+  getEmployeesFromLeader = () => {
+    let self = this
+    let employees = []
+    firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
+      for (let i in doc.data().teams) {
+        firestore.collection(doc.data().teams[i]).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc1) => {
+
+            let tmp = this.getInitals(doc1.data().name)
+
+            employees.push({
+              id: doc1.id,
+              name: doc1.data().name,
+              initals: tmp
+            })
+
+            self.setState({allEmployees: employees})
+          })
+        })
+      }
+    })
+  }
+
+  getInitals = (name) => {
+    let arr = name.split(' ');
+    if (arr.length > 1) {
+      return ( arr[0].charAt(0) + '' + arr[1].charAt(0) )
+    } else {
+      return name.charAt(0)
+    }
+  }
+
   toggleNewMentor = () => {
+    this.getEmployeesFromLeader()
     this.setState({
       newMentor: !this.state.newMentor,
       mentorName: '',
@@ -242,6 +280,18 @@ class Home extends Component {
 
   render() {
 
+    const styles = theme => ({
+      root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+      },
+      chip: {
+        margin: theme.spacing.unit,
+        marginBottom: '50px',
+     },
+    });
+
     // Side bar loaded from Side component
     let sidebarContent = <Side />;
 
@@ -331,6 +381,27 @@ class Home extends Component {
               <Input onChange={(ev) => this.handleMentorTitle(ev)} value={this.state.mentorTitle} name='name' label='Enter Mentor Title' />
               <Input onChange={(ev) => this.handleMentorPicture(ev)} value={this.state.mentorPicture} name='name' label='Enter Mentor Picture Link' />
               <Input onChange={(ev) => this.handleMentorNotes(ev)} value={this.state.mentorNotes} name='name' type='textarea' label='Enter Mentor Notes' />
+  
+              <b>Mentees</b>
+              <br/>
+              
+
+              <hr/>
+
+              <b>All Employees</b>
+              <br/>
+              {this.state.allEmployees.map((person) => {
+                return (
+                  <Chip
+                    key={person.id}
+                    avatar={<Avatar>{`${person.initals}`}</Avatar>}
+                    label={`${person.name}`}
+                    className={styles.chip}
+                    style={{marginRight: '15px', marginBottom: '10px'}}
+                  />
+                )
+              })}
+              
   
             </CardBody>
 
