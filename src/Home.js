@@ -5,7 +5,7 @@ import Side from './SideBar/Side.js'
 import CalendarPage from './CalendarPage.js';
 import Leader from './Leader'
 import Student from './Student'
-import Mentors from './Mentors'
+import Mentors from './Mentors/Mentors'
 // import DropZone from 'react-drop-zone'
 import 'react-datepicker/dist/react-datepicker.css';
 
