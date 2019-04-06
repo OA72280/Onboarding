@@ -5,6 +5,7 @@ import Side from './SideBar/Side.js'
 import CalendarPage from './CalendarPage.js';
 import Leader from './Leader'
 import Student from './Student'
+import Mentors from './Mentors'
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact";
@@ -176,7 +177,9 @@ class Home extends Component {
     if (this.props.userData !== null) {
       if (this.props.page === 'calendar') {
         PageRequested = <CalendarPage {...data}/>
-      } else if (!this.props.userData.leader) {
+      } else if (this.props.page === 'mentors') {
+        PageRequested = <Mentors {...data} />
+      }else if (!this.props.userData.leader) {
         PageRequested = <Student {...data}/>
       } else {
         PageRequested = <Leader {...data}/>
@@ -212,12 +215,11 @@ class Home extends Component {
         <Row>
           <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
          
-          {this.props.userData !== null && this.props.userData.leader ?
+          {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' ?
             <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Task</Button>              
           :
             null
           }
-
         </Row>
 
         <hr/>

@@ -120,7 +120,7 @@ class App extends Component {
           this.signedIn()
             ? (this.state.user
               ?
-                <Home {...data}/>
+                <Home page='home' {...data}/>
               :
                null
             )
@@ -133,6 +133,18 @@ class App extends Component {
             ? (this.state.user
               ?
                 <Home page='calendar' {...data}/>
+              :
+               null
+            )
+            // eslint-disable-next-line
+            : <Redirect to="/launch/SignIn"/>
+        )}/>
+
+        <Route exact path='/launch/Mentors' render={() => (
+          this.signedIn()
+            ? (this.state.user
+              ?
+                <Home page='mentors' {...data}/>
               :
                null
             )

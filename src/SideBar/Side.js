@@ -72,6 +72,13 @@ class Side extends Component {
                         </div>
                     </NavLink>
 
+                    <NavLink style={{textDecoration: 'none'}} to={`/launch/Mentors`}>
+                        <div style={{cursor: 'pointer'}} className='sideHover'>
+                            <i className="fas fa-user-friends" />
+                            <h6 style={{textAlign: 'center', float: 'left', marginLeft: '-6px', fontSize: '0.4em'}}>Mentors</h6>
+                        </div>
+                    </NavLink>
+
 {/* 
                     <NavLink style={{textDecoration: 'none'}} to={`/itatlas/Home/Portfolio`}>
                         <div style={{cursor: 'pointer'}} className='sideHover'>
