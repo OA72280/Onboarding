@@ -36,10 +36,9 @@ class Mentors extends Component {
       <Row>
         {this.state.mentors !== null ?
           this.state.mentors.map((data) => {
-            console.log(data)
               return ( 
-                <Col key={data} xs='12' sm='6' md='6' lg='3'>
-                  <MentorBox mentor={data} {...userData}/> 
+                <Col key={data.mentorName} xs='12' sm='6' md='6' lg='3'>
+                  <MentorBox toggleNewMentorEdit={this.props.toggleNewMentorEdit} mentor={data} {...userData}/> 
                 </Col>
               )
           })

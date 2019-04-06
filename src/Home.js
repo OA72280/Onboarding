@@ -6,13 +6,12 @@ import CalendarPage from './CalendarPage.js';
 import Leader from './Leader'
 import Student from './Student'
 import Mentors from './Mentors/Mentors'
-// import DropZone from 'react-drop-zone'
 import 'react-datepicker/dist/react-datepicker.css';
 
 import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact";
 import {Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
-import {firestore, firestorage} from './base';
+import {firestore} from './base';
 
 import './Home.css'
 // import moment from 'moment';
@@ -42,6 +41,8 @@ class Home extends Component {
       mentorTitle: '',
       mentorNotes: '',
       mentorPicture: '',
+
+      mentorID: null,
 
     };
   }
@@ -92,7 +93,27 @@ class Home extends Component {
 
   //======================================================== New Mentor Functions ========================================================
   toggleNewMentor = () => {
-    this.setState({newMentor: !this.state.newMentor}) 
+    this.setState({
+      newMentor: !this.state.newMentor,
+      mentorName: '',
+      mentorLocation: '',
+      mentorTitle: '',
+      mentorNotes: '',
+      mentorPicture: '',
+      mentorID: null
+    }) 
+  }
+
+  toggleNewMentorEdit = (mentorName, mentorLocation, mentorTitle, mentorNotes, mentorPicture, mentorID) => {
+    this.setState({
+      newMentor: !this.state.newMentor,
+      mentorName: mentorName,
+      mentorLocation: mentorLocation,
+      mentorTitle: mentorTitle,
+      mentorNotes: mentorNotes,
+      mentorPicture: mentorPicture,
+      mentorID: mentorID
+    }) 
   }
 
   handleNewMentor = () => {
@@ -106,13 +127,46 @@ class Home extends Component {
         mentorTitle: self.state.mentorTitle,
         mentorNotes: self.state.mentorNotes,
         mentorPicture: self.state.mentorPicture,
+        mentorID: self.makeid(10)
       })
 
       firestore.collection("leaders").doc(self.props.uid).update({mentors: oldMentors})
-
     })
   
     this.toggleNewMentor()
+  }
+
+  handleMentorEdit = () => {
+    let self = this
+    firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
+      let oldMentors = doc.data().mentors
+
+      for (let i in oldMentors) {
+        if (oldMentors[i].mentorID === self.state.mentorID) {
+          oldMentors[i] = {
+            mentorName: self.state.mentorName,
+            mentorLocation: self.state.mentorLocation,
+            mentorTitle: self.state.mentorTitle,
+            mentorNotes: self.state.mentorNotes,
+            mentorPicture: self.state.mentorPicture,
+          }
+        }
+      }
+
+      firestore.collection("leaders").doc(self.props.uid).update({mentors: oldMentors})
+
+      self.toggleNewMentor()
+    })
+  }
+
+  makeid = (size) => {
+    let text = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    
+    for (var i = 0; i < size; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    
+    return text;
   }
 
   handleMentorName = (ev) => {
@@ -233,7 +287,7 @@ class Home extends Component {
       if (this.props.page === 'calendar') {
         PageRequested = <CalendarPage {...data}/>
       } else if (this.props.page === 'mentors') {
-        PageRequested = <Mentors {...data} />
+        PageRequested = <Mentors toggleNewMentorEdit={this.toggleNewMentorEdit} {...data} />
       }else if (!this.props.userData.leader) {
         PageRequested = <Student {...data}/>
       } else {
@@ -282,7 +336,12 @@ class Home extends Component {
 
             <ModalFooter>
                 <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewMentor}>Exit</Button>{' '}
-                <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewMentor}> Save</Button>
+                {this.state.mentorID === null ?
+                  <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewMentor}> Save</Button>
+                :
+                  <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleMentorEdit}> Save</Button>
+
+                }
             </ModalFooter>
         </Modal>
 

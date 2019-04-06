@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {firestore} from '../base';
+// import {firestore} from '../base';
 
 class MentorBox extends Component {
   constructor(props) {
@@ -11,14 +11,21 @@ class MentorBox extends Component {
     }
   }
 
+  handleMentorEdit = () => {
+    this.props.toggleNewMentorEdit(this.props.mentor.mentorName, 
+                                    this.props.mentor.mentorLocation, 
+                                    this.props.mentor.mentorTitle, 
+                                    this.props.mentor.mentorNotes, 
+                                    this.props.mentor.mentorPicture, 
+                                    this.props.mentor.mentorID)
+  }
+
   render() {
 
     return (
-      <div style={{overflowY: 'scroll'}} className="clientBox scrollStuff z-depth-5">
+      <div onClick={this.handleMentorEdit} style={{overflowY: 'scroll'}} className="clientBox scrollStuff z-depth-5">
 
-        <div className={`clientColorbox ${this.state.color}`}>
-
-        </div>
+        <div className={`clientColorbox ${this.state.color}`}></div>
         
         <img className='circle z-depth-3' alt="pic" src={this.props.mentor.mentorPicture} />
 
