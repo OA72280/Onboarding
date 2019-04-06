@@ -41,7 +41,7 @@ class Leader extends Component {
           Object.keys(this.state.users).map((data) => {
             if (!this.state.users[data].leader) {
               return ( 
-                <Col key={data} sm='12' md='6' lg='3'>
+                <Col key={data} xs='12' sm='6' md='6' lg='3'>
                   <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
                 </Col>
               )
