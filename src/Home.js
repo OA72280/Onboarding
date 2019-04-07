@@ -43,7 +43,7 @@ class Home extends Component {
       mentorTitle: '',
       mentorNotes: '',
       mentorPicture: '',
-      mentorID: null,
+      mentorID: '',
 
       allEmployees: [],
       selectedEmployees: [],
@@ -98,20 +98,42 @@ class Home extends Component {
   getEmployeesFromLeader = () => {
     let self = this
     let employees = []
+    let selected1 = []
     firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
       for (let i in doc.data().teams) {
         firestore.collection(doc.data().teams[i]).get().then((querySnapshot) => {
           querySnapshot.forEach((doc1) => {
 
-            let tmp = this.getInitals(doc1.data().name)
+            if (doc1.data().leader) return
 
-            employees.push({
-              id: doc1.id,
-              name: doc1.data().name,
-              initals: tmp
-            })
+            let bool = false
+            let selected = doc1.data().mentors
+            for (let j in selected) {
+              if (selected[j].mentorPicture === self.state.mentorPicture) {
+                
+                let tmp = this.getInitals(doc1.data().name)
 
-            self.setState({allEmployees: employees})
+                selected1.push({
+                  id: doc1.id,
+                  name: doc1.data().name,
+                  initals: tmp
+                })
+                bool = true
+                self.setState({selectedEmployees: selected1})
+              }
+            }
+
+            if (!bool) {
+              let tmp = this.getInitals(doc1.data().name)
+
+              employees.push({
+                id: doc1.id,
+                name: doc1.data().name,
+                initals: tmp
+              })
+
+              self.setState({allEmployees: employees})
+            }
           })
         })
       }
@@ -133,19 +155,91 @@ class Home extends Component {
     for (let i in this.state.allEmployees) {
       if (this.state.allEmployees[i].id === person.id) {
         
-        // TODO Make load employees load firebase eventually
-        // TODO Not removing first person
-        tmpEmployees.splice(i,i)
+        if (i > -1) {
+          tmpEmployees.splice(i, 1);
+        }
 
         tmpSelected.push(person)
       }
     }
-    console.log(tmpEmployees)
-    this.setState({allEmployees: tmpEmployees, selectedEmployees: tmpSelected})
+    this.setState({allEmployees: tmpEmployees, selectedEmployees: tmpSelected}, () => {
+      this.saveMentee(person)
+    })
+  }
+
+  handleDeSelectionOfEmployee = (person) => {
+    let tmpEmployees = this.state.allEmployees
+    let tmpSelected = this.state.selectedEmployees
+    for (let i in this.state.selectedEmployees) {
+      if (this.state.selectedEmployees[i].id === person.id) {
+        
+        if (i > -1) {
+          tmpSelected.splice(i, 1);
+        }
+
+        tmpEmployees.push(person)
+      }
+    }
+    this.setState({allEmployees: tmpEmployees, selectedEmployees: tmpSelected}, () => {
+      this.removeMentee(person)
+    })
+  }
+
+  saveMentee = (person) => {
+    let self = this
+    firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
+      for (let i in doc.data().teams) {
+        firestore.collection(doc.data().teams[i]).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc1) => {
+
+            if (doc1.id === person.id) {
+              let tmp = doc1.data().mentors
+
+              tmp.push({
+                mentorName: self.state.mentorName,
+                mentorLocation: self.state.mentorLocation,
+                mentorTitle: self.state.mentorTitle,
+                mentorNotes: self.state.mentorNotes,
+                mentorPicture: self.state.mentorPicture,
+                // mentorID: self.state.mentorID,
+              })
+            
+              firestore.collection(doc.data().teams[i]).doc(person.id).update({mentors: tmp})
+            }
+
+          })
+        })
+      }
+    })
+  }
+
+  removeMentee = (person) => {
+    firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
+      for (let i in doc.data().teams) {
+        firestore.collection(doc.data().teams[i]).get().then((querySnapshot) => {
+          querySnapshot.forEach((doc1) => {
+
+            if (doc1.id === person.id) {
+              let tmp = doc1.data().mentors
+
+              for (let j in tmp) {
+                if (tmp[j].mentorID === person.mentorID) {
+                  if (j > -1) {
+                    tmp.splice(j, 1);
+                  }
+                }
+              }
+
+              firestore.collection(doc.data().teams[i]).doc(person.id).update({mentors: tmp})
+            }
+
+          })
+        })
+      }
+    })
   }
 
   toggleNewMentor = () => {
-    this.getEmployeesFromLeader()
     this.setState({
       newMentor: !this.state.newMentor,
       mentorName: '',
@@ -153,12 +247,29 @@ class Home extends Component {
       mentorTitle: '',
       mentorNotes: '',
       mentorPicture: '',
-      mentorID: null
+      mentorID: '',
+      selectedEmployees: [],
+      allEmployees: [],
+    }, () => {
+      this.getEmployeesFromLeader()
     }) 
   }
 
+  exitNewMentor = () => {
+    this.setState({
+      newMentor: !this.state.newMentor,
+      mentorName: '',
+      mentorLocation: '',
+      mentorTitle: '',
+      mentorNotes: '',
+      mentorPicture: '',
+      mentorID: '',
+      selectedEmployees: [],
+      allEmployees: [],
+    })
+  }
+
   toggleNewMentorEdit = (mentorName, mentorLocation, mentorTitle, mentorNotes, mentorPicture, mentorID) => {
-    this.getEmployeesFromLeader()
     this.setState({
       newMentor: !this.state.newMentor,
       mentorName: mentorName,
@@ -167,6 +278,8 @@ class Home extends Component {
       mentorNotes: mentorNotes,
       mentorPicture: mentorPicture,
       mentorID: mentorID
+    }, () => {
+      this.getEmployeesFromLeader()
     }) 
   }
 
@@ -398,43 +511,49 @@ class Home extends Component {
               <Input onChange={(ev) => this.handleMentorPicture(ev)} value={this.state.mentorPicture} name='name' label='Enter Mentor Picture Link' />
               <Input onChange={(ev) => this.handleMentorNotes(ev)} value={this.state.mentorNotes} name='name' type='textarea' label='Enter Mentor Notes' />
   
-              <b>Mentees</b>
-              <br/>
-              {this.state.selectedEmployees.map((person) => {
-                return (
-                  <Chip
-                    key={person.id}
-                    avatar={<Avatar>{`${person.initals}`}</Avatar>}
-                    label={`${person.name}`}
-                    className={styles.chip}
-                    style={{marginRight: '15px', marginBottom: '10px'}}
-                  />
-                )
-              })}
 
-              <hr/>
+              {/* {this.state.mentorID === null ? */}
+                <b>Mentees</b>
+                <br/>
+                {this.state.selectedEmployees.map((person) => {
+                  return (
+                    <Chip
+                      onClick={() => this.handleDeSelectionOfEmployee(person)}
+                      key={person.id}
+                      avatar={<Avatar>{`${person.initals}`}</Avatar>}
+                      label={`${person.name}`}
+                      className={styles.chip}
+                      style={{marginRight: '15px', marginBottom: '10px'}}
+                    />
+                  )
+                })}
 
-              <b>All Employees</b>
-              <br/>
-              {this.state.allEmployees.map((person) => {
-                return (
-                  <Chip
-                    onClick={() => this.handleSelectionOfEmployee(person)}
-                    key={person.id}
-                    avatar={<Avatar>{`${person.initals}`}</Avatar>}
-                    label={`${person.name}`}
-                    className={styles.chip}
-                    style={{marginRight: '15px', marginBottom: '10px'}}
-                  />
-                )
-              })}
-              
+                <hr/>
+
+                <b>All Employees</b>
+                <br/>
+                {this.state.allEmployees.map((person) => {
+                  return (
+                    <Chip
+                      onClick={() => this.handleSelectionOfEmployee(person)}
+                      key={person.id}
+                      avatar={<Avatar>{`${person.initals}`}</Avatar>}
+                      label={`${person.name}`}
+                      className={styles.chip}
+                      style={{marginRight: '15px', marginBottom: '10px'}}
+                    />
+                  )
+                })}
+              {/* :
+              null
+            }
+               */}
   
             </CardBody>
 
             <ModalFooter>
-                <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewMentor}>Exit</Button>{' '}
-                {this.state.mentorID === null ?
+                <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.exitNewMentor}>Exit</Button>{' '}
+                {this.state.mentorID === '' ?
                   <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewMentor}> Save</Button>
                 :
                   <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleMentorEdit}> Save</Button>
