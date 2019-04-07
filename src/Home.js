@@ -251,7 +251,7 @@ class Home extends Component {
       selectedEmployees: [],
       allEmployees: [],
     }, () => {
-      this.getEmployeesFromLeader()
+      // this.getEmployeesFromLeader()
     }) 
   }
 
@@ -298,11 +298,13 @@ class Home extends Component {
       })
 
       firestore.collection("leaders").doc(self.props.uid).update({mentors: oldMentors})
+      self.exitNewMentor()
     })
   
-    this.toggleNewMentor()
   }
 
+  // TODO Editing is overridding person to the next to them 
+  // TODO Think it is calling the wrong method becauseo of the mentorID stuff
   handleMentorEdit = () => {
     let self = this
     firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
@@ -316,13 +318,13 @@ class Home extends Component {
             mentorTitle: self.state.mentorTitle,
             mentorNotes: self.state.mentorNotes,
             mentorPicture: self.state.mentorPicture,
+            mentorID: self.state.mentorID
           }
         }
       }
 
       firestore.collection("leaders").doc(self.props.uid).update({mentors: oldMentors})
-
-      self.toggleNewMentor()
+      self.exitNewMentor()
     })
   }
 
@@ -512,9 +514,11 @@ class Home extends Component {
               <Input onChange={(ev) => this.handleMentorNotes(ev)} value={this.state.mentorNotes} name='name' type='textarea' label='Enter Mentor Notes' />
   
 
-              {/* {this.state.mentorID === null ? */}
+              {/* {this.state.mentorID === '' ? */}
+                <div>
                 <b>Mentees</b>
                 <br/>
+             
                 {this.state.selectedEmployees.map((person) => {
                   return (
                     <Chip
@@ -544,10 +548,10 @@ class Home extends Component {
                     />
                   )
                 })}
-              {/* :
-              null
-            }
-               */}
+                </div>
+               {/* :
+                null
+              } */}
   
             </CardBody>
 
