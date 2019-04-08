@@ -230,6 +230,7 @@ class Home extends Component {
                 }
               }
 
+              console.log(tmp)
               firestore.collection(doc.data().teams[i]).doc(person.id).update({mentors: tmp})
             }
 
@@ -270,6 +271,7 @@ class Home extends Component {
   }
 
   toggleNewMentorEdit = (mentorName, mentorLocation, mentorTitle, mentorNotes, mentorPicture, mentorID) => {
+    // console.log(mentorID)
     this.setState({
       newMentor: !this.state.newMentor,
       mentorName: mentorName,
@@ -322,7 +324,8 @@ class Home extends Component {
           }
         }
       }
-
+      // console.log(self.state.mentorID)
+      // console.log(oldMentors)
       firestore.collection("leaders").doc(self.props.uid).update({mentors: oldMentors})
       self.exitNewMentor()
     })
