@@ -33,20 +33,23 @@ class Mentors extends Component {
     }
     
     return (
-      <Row>
-        {this.state.mentors !== null ?
-          this.state.mentors.map((data) => {
-              return ( 
-                <Col key={data.mentorName} xs='12' sm='6' md='6' lg='3'>
-                  <MentorBox toggleNewMentorEdit={this.props.toggleNewMentorEdit} mentor={data} {...userData}/> 
-                </Col>
-              )
-          })
-        : 
-          null
-        }
-      </Row>
-
+      <div>
+        <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Mentors</b></h1>
+        <hr/>
+        <Row>
+          {this.state.mentors !== null ?
+            this.state.mentors.map((data) => {
+                return ( 
+                  <Col key={data.mentorName} xs='12' sm='6' md='6' lg='3'>
+                    <MentorBox toggleNewMentorEdit={this.props.toggleNewMentorEdit} mentor={data} {...userData}/> 
+                  </Col>
+                )
+            })
+          : 
+            null
+          }
+        </Row>
+      </div>
     );
   }
 }
