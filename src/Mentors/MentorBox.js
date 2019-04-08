@@ -33,9 +33,9 @@ class MentorBox extends Component {
 
         <hr />
        
-        <p>Title: {this.props.mentor.mentorTitle}</p>
-        <p>Location: {this.props.mentor.mentorLocation}</p>
-        <p>Notes: {this.props.mentor.mentorNotes}</p>
+        <p><b>Title:</b> {this.props.mentor.mentorTitle}</p>
+        <p><b>Location:</b> {this.props.mentor.mentorLocation}</p>
+        <p><b>Notes:</b> {this.props.mentor.mentorNotes}</p>
 
       </div>
     );
