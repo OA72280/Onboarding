@@ -16,20 +16,7 @@ class CalendarPage extends Component {
     super(props);
 
     this.state = {
-      dates: [
-        {
-          allDay: true,
-          end: new Date('April 8, 2019 11:59:00'),
-          start: new Date('April 8, 2019 11:59:00'),
-          title: 'I9 Paper',
-        },
-        {
-          allDay: true,
-          end: new Date('April 22, 2019 11:13:00'),
-          start: new Date('April 22, 2019 11:13:00'),
-          title: 'Dell Technolgies Advantage',
-        },
-      ],
+      dates: [],
     }
   }
 
