@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './TaskBox.css'
 
 import {Row, Col} from 'reactstrap';
-import {firestore} from './base';
+import {firestore} from '../base';
 
 import Select from 'react-select'
 

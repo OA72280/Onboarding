@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import './TaskBox.css'
 
 import {Row, Col} from 'reactstrap';
-import {firestore} from './base';
+import {firestore} from '../base';
 
 import BigCalendar from 'react-big-calendar'
-import '../node_modules/react-big-calendar/lib/css/react-big-calendar.css';
+import '../../node_modules/react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment'
 
 const localizer = BigCalendar.momentLocalizer(moment) // or globalizeLocalizer

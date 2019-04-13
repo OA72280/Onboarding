@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 // import {Input, Button} from 'mdbreact';
 
 import TaskBox from './TaskBox.js';
-import {firestore} from './base';
+import {firestore} from '../base';
 import {Row, Col} from 'reactstrap'
 
 class Student extends Component {

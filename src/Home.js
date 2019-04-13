@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 
 import Sidebar from 'react-sidebar'
 import Side from './SideBar/Side.js'
-import CalendarPage from './CalendarPage.js'
-import Leader from './Leader'
-import Student from './Student'
+import CalendarPage from './Calendar/CalendarPage.js'
+import Leader from './Leader/Leader'
+import StudentDashboard from './Student/StudentDashboard'
+import Student from './Student/Student'
 import Mentors from './Mentors/Mentors'
 import MyMentors from './Mentors/MyMentors'
 import Avatar from '@material-ui/core/Avatar'
@@ -484,7 +485,7 @@ class Home extends Component {
         if (this.props.page === 'mentors') {
           PageRequested = <MyMentors {...data}/>
         } else {
-          PageRequested = <Student {...data}/>
+          PageRequested = <StudentDashboard {...data}/>
         }
       }
     } else {
