@@ -2,15 +2,16 @@ import React, {Component} from 'react'
 
 import Sidebar from 'react-sidebar'
 import Side from './SideBar/Side.js'
-import CalendarPage from './CalendarPage.js';
+import CalendarPage from './CalendarPage.js'
 import Leader from './Leader'
 import Student from './Student'
 import Mentors from './Mentors/Mentors'
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import 'react-datepicker/dist/react-datepicker.css';
+import MyMentors from './Mentors/MyMentors'
+import Avatar from '@material-ui/core/Avatar'
+import Chip from '@material-ui/core/Chip'
+import 'react-datepicker/dist/react-datepicker.css'
 
-import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact";
+import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
 import {Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import {firestore} from './base';
@@ -201,7 +202,7 @@ class Home extends Component {
                 mentorTitle: self.state.mentorTitle,
                 mentorNotes: self.state.mentorNotes,
                 mentorPicture: self.state.mentorPicture,
-                // mentorID: self.state.mentorID,
+                mentorID: self.state.mentorID,
               })
             
               firestore.collection(doc.data().teams[i]).doc(person.id).update({mentors: tmp})
@@ -214,6 +215,7 @@ class Home extends Component {
   }
 
   removeMentee = (person) => {
+    let self = this
     firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
       for (let i in doc.data().teams) {
         firestore.collection(doc.data().teams[i]).get().then((querySnapshot) => {
@@ -223,14 +225,13 @@ class Home extends Component {
               let tmp = doc1.data().mentors
 
               for (let j in tmp) {
-                if (tmp[j].mentorID === person.mentorID) {
+                if (tmp[j].mentorID === self.state.mentorID) {
                   if (j > -1) {
                     tmp.splice(j, 1);
                   }
                 }
               }
 
-              console.log(tmp)
               firestore.collection(doc.data().teams[i]).doc(person.id).update({mentors: tmp})
             }
 
@@ -470,12 +471,21 @@ class Home extends Component {
     if (this.props.userData !== null) {
       if (this.props.page === 'calendar') {
         PageRequested = <CalendarPage {...data}/>
-      } else if (this.props.page === 'mentors') {
-        PageRequested = <Mentors toggleNewMentorEdit={this.toggleNewMentorEdit} {...data} />
-      }else if (!this.props.userData.leader) {
-        PageRequested = <Student {...data}/>
+      } 
+      // If Leader
+      else if (this.props.userData.leader) {
+        if (this.props.page === 'mentors') {
+          PageRequested = <Mentors toggleNewMentorEdit={this.toggleNewMentorEdit} {...data} />
+        } else {
+          PageRequested = <Leader {...data}/>
+        }
+      // If employee
       } else {
-        PageRequested = <Leader {...data}/>
+        if (this.props.page === 'mentors') {
+          PageRequested = <MyMentors {...data}/>
+        } else {
+          PageRequested = <Student {...data}/>
+        }
       }
     } else {
       PageRequested = null

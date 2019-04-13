@@ -12,7 +12,8 @@ class MentorBox extends Component {
   }
 
   handleMentorEdit = () => {
-    this.props.toggleNewMentorEdit(this.props.mentor.mentorName, 
+    if (this.props.userData.leader)
+      this.props.toggleNewMentorEdit(this.props.mentor.mentorName, 
                                     this.props.mentor.mentorLocation, 
                                     this.props.mentor.mentorTitle, 
                                     this.props.mentor.mentorNotes, 
