@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 
-// import {Input, Button} from 'mdbreact';
-
 import TaskBox from './TaskBox.js';
 import {firestore} from '../base';
 import {Row, Col} from 'reactstrap'
@@ -115,7 +113,7 @@ class Student extends Component {
     return (
       <div>
 
-        <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>This Week</b></h1>
+        <h1 onClick={this.props.openTasks} className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>This Week</b></h1>
         <hr/>
         <Row>
           {this.state.thisWeek !== [] ?
