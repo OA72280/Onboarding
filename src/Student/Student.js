@@ -132,55 +132,63 @@ class Student extends Component {
         </Row>
 
         <br/>
-        <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Next Week</b></h1>
-        <hr/>
-        <Row>
-          {this.state.nextWeek !== [] ?
-            this.state.nextWeek.map((task, id) => {
-                return ( 
-                  <Col key={id} sm='3'>
-                    <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
-                  </Col>
-                )            
-            })
-          : 
-          null
-        }
-        </Row>
 
-        <br/>
-        <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Looking Ahead</b></h1>
-        <hr/>
-        <Row>
-          {this.state.lookingAhead !== [] ?
-            this.state.lookingAhead.map((task, id) => {
-                return ( 
-                  <Col key={id} sm='3'>
-                    <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
-                  </Col>
-                )            
-            })
-          : 
-          null
-        }
-        </Row>
+        {!this.props.dashboard ?
+        <div>
+          <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Next Week</b></h1>
+          <hr/>
+          <Row>
+            {this.state.nextWeek !== [] ?
+              this.state.nextWeek.map((task, id) => {
+                  return ( 
+                    <Col key={id} sm='3'>
+                      <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
+                    </Col>
+                  )            
+              })
+            : 
+            null
+          }
+          </Row>
 
-        <br/>
-        <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} ><b>Past Due</b></h1>
-        <hr/>
-        <Row>
-          {this.state.completed !== [] ?
-            this.state.completed.map((task, id) => {
-                return ( 
-                  <Col key={id} sm='3'>
-                    <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
-                  </Col>
-                )            
-            })
-          : 
-          null
+          <br/>
+          <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Looking Ahead</b></h1>
+          <hr/>
+          <Row>
+            {this.state.lookingAhead !== [] ?
+              this.state.lookingAhead.map((task, id) => {
+                  return ( 
+                    <Col key={id} sm='3'>
+                      <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
+                    </Col>
+                  )            
+              })
+            : 
+            null
+          }
+          </Row>
+
+          <br/>
+          <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} ><b>Past Due</b></h1>
+          <hr/>
+          <Row>
+            {this.state.completed !== [] ?
+              this.state.completed.map((task, id) => {
+                  return ( 
+                    <Col key={id} sm='3'>
+                      <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
+                    </Col>
+                  )            
+              })
+            : 
+            null
+          }
+          </Row>
+          </div>
+        :
+          null  
         }
-        </Row>
+
       </div>
     );
   }

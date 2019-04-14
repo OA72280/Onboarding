@@ -6,6 +6,9 @@ import TaskBox from './TaskBox.js';
 import {firestore} from '../base';
 import {Row, Col} from 'reactstrap'
 
+import LocationPreference from '../LocationPreference'
+import Student from './Student'
+
 class StudentDashboard extends Component {
 
   render() {
@@ -16,9 +19,18 @@ class StudentDashboard extends Component {
       teamID: this.props.teamID,
     }
     return (
-      <div>
-        <p>Hello!</p>
-      </div>
+        <Row>
+          <Col sm='3'>
+            <LocationPreference {...userData}/>
+          </Col>
+
+          <Col sm='9'>
+            <div>
+              <Student dashboard={true} {...userData}/>
+            </div>
+          </Col>
+
+        </Row>
     );
   }
 }
