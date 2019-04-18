@@ -3,11 +3,35 @@ import './Student/TaskBox.css'
 
 import {Row, Col} from 'reactstrap'
 import {Input} from 'mdbreact'
+import {firestore} from './base'
 
 class PearsonVue extends Component {
 
-  render() {
+  constructor(props) {
+    super(props)
 
+    this.state = { 
+      pearsonVueID: '',
+    }
+  }
+
+  componentWillMount() {
+    let self = this
+    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
+      if (doc.data().pearsonVueID !== null && doc.data().pearsonVueID !== undefined)
+        self.setState({pearsonVueID: doc.data().pearsonVueID}) 
+    })
+  }
+  
+  saveToFirebase = () => {      
+    firestore.collection(this.props.teamID).doc(this.props.uid).update({pearsonVueID: this.state.pearsonVueID})
+  }
+
+  handlePearsonVueID = (ev) => {
+    this.setState({pearsonVueID: ev.target.value}, () => {this.saveToFirebase()})
+  }
+
+  render() {
     return (
       <div stlye={{height: '5em'}} className="z-depth-5">
 
@@ -20,7 +44,7 @@ class PearsonVue extends Component {
         <Row>
           <Col sm='1' />
           <Col sm='10'>
-            <Input label='Pearson Vue ID'/>
+          <Input onChange={(ev) => this.handlePearsonVueID(ev)} value={this.state.pearsonVueID} name='preference1' label='Pearson Vue ID' />
           </Col>
           <Col sm='1' />
         </Row>
