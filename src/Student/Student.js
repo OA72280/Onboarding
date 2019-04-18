@@ -119,7 +119,7 @@ class Student extends Component {
           {this.state.thisWeek !== [] ?
             this.state.thisWeek.map((task, id) => {
                 return ( 
-                  <Col key={id} sm='3'>
+                  <Col key={id} sm="4">
                     <TaskBox tasks={this.state.tasks} task={task} id={id} {...userData}/> 
                   </Col>
                 )            
