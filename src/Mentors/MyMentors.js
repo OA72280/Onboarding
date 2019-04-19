@@ -37,7 +37,7 @@ class MyMentors extends Component {
         <h1 className='ITAtlasText' style={{paddingLeft: '0px', marginLeft: '0px'}} > <b>Mentors</b></h1>
         <hr/>
         <Row>
-          {this.state.mentors !== null ?
+          {this.state.mentors !== null && this.state.mentors !== undefined ?
             this.state.mentors.map((data) => {
                 return ( 
                   <Col key={data.mentorName} xs='12' sm='6' md='6' lg='3'>

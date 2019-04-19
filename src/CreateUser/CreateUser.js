@@ -100,6 +100,7 @@ class CreateUser extends Component {
               team: target.teamCode.value,
               tasks: [],
               picture: self.state.uploadedImage,
+              mentors: [],
             })
 
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
