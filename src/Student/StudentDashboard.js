@@ -26,9 +26,9 @@ class StudentDashboard extends Component {
       user: this.props.user,
       uid: this.props.uid,
       userData: this.props.userData,
-      teamID: this.props.teamID,
+      teamID: this.props.teamID, 
     }
-
+    
     if (this.state.dashboard) {
       return (
           <Row>

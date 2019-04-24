@@ -3,6 +3,7 @@ import {firestore} from '../base';
 
 import {Row, Col} from 'reactstrap';
 import PersonBox from './PersonBox'
+import StudentDashboard from '../Student/StudentDashboard';
 
 class Leader extends Component {
 
@@ -10,7 +11,9 @@ class Leader extends Component {
     super(props);
 
     this.state = {
-      users: null
+      users: null,
+      dashboard: false, 
+      employeeID: '',
     }
   }
 
@@ -27,6 +30,13 @@ class Leader extends Component {
     });
   }  
 
+  handleEmployeeClick = (id) => {
+    this.setState({
+      dashboard: !this.state.dashboard,
+      employeeID: id,
+    })
+  }
+
   render() {
     const userData = {
       user: this.props.user,
@@ -35,26 +45,31 @@ class Leader extends Component {
       teamID: this.props.teamID,
     }
 
+    if (!this.state.dashboard) {
+      return (
+        <Row>
+          {this.state.users !== null ?
+            Object.keys(this.state.users).map((data) => {
+              if (!this.state.users[data].leader) {
+                return ( 
+                  <Col onClick={() => {this.handleEmployeeClick(data)}} key={data} xs='12' sm='6' md='6' lg='3'>
+                    <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
+                  </Col>
+                )
+              } else {
+                return null
+              }
+            })
+          : 
+            null
+          }
+        </Row>
+      );
+  } else {
+    userData['uid'] = this.state.employeeID
     return (
-      <Row>
-        {this.state.users !== null ?
-          Object.keys(this.state.users).map((data) => {
-            if (!this.state.users[data].leader) {
-              return ( 
-                <Col key={data} xs='12' sm='6' md='6' lg='3'>
-                  <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
-                </Col>
-              )
-            } else {
-              return null
-            }
-          })
-        : 
-          null
-        }
-      </Row>
+      <StudentDashboard {...userData}/>
     );
   }
-}
-
-export default Leader;
+}}
+  export default Leader;
