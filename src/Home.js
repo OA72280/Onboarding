@@ -10,6 +10,8 @@ import Mentors from './Mentors/Mentors'
 import MyMentors from './Mentors/MyMentors'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
+import TeamDropDown from './TeamDropDown'
+
 import 'react-datepicker/dist/react-datepicker.css'
 
 import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
@@ -49,6 +51,9 @@ class Home extends Component {
 
       allEmployees: [],
       selectedEmployees: [],
+
+      dashboard: false, 
+      employeeID: '',
     };
   }
 
@@ -413,6 +418,16 @@ class Home extends Component {
     });
   };
 
+  handleEmployeeClick = (id) => {
+    this.setState({
+      dashboard: !this.state.dashboard,
+      employeeID: id,
+    })
+  }
+
+  hideDashboard = () => {
+    this.setState({dashboard: !this.state.dashboard})
+  }
 
   render() {
 
@@ -478,7 +493,7 @@ class Home extends Component {
         if (this.props.page === 'mentors') {
           PageRequested = <Mentors toggleNewMentorEdit={this.toggleNewMentorEdit} {...data} />
         } else {
-          PageRequested = <Leader {...data}/>
+          PageRequested = <Leader employeeID={this.state.employeeID} dashboard={this.state.dashboard} handleEmployeeClick={this.handleEmployeeClick} {...data}/>
         }
       // If employee
       } else {
@@ -581,7 +596,13 @@ class Home extends Component {
         </Modal>
 
         <Row>
-          <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
+          {this.state.dashboard ?
+            <h1 onClick={this.hideDashboard} className='ITAtlasText'> <b>LAUNCH</b></h1>
+          :
+            <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
+          } 
+          <TeamDropDown className='accountdropdown' {...data}/>
+
 
           {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' ?
             <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Task</Button>              

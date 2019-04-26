@@ -12,8 +12,6 @@ class Leader extends Component {
 
     this.state = {
       users: null,
-      dashboard: false, 
-      employeeID: '',
     }
   }
 
@@ -30,29 +28,29 @@ class Leader extends Component {
     });
   }  
 
-  handleEmployeeClick = (id) => {
-    this.setState({
-      dashboard: !this.state.dashboard,
-      employeeID: id,
-    })
-  }
+  // handleEmployeeClick = (id) => {
+  //   this.setState({
+  //     dashboard: !this.state.dashboard,
+  //     employeeID: id,
+  //   })
+  // }
 
   render() {
-    const userData = {
+    let userData = {
       user: this.props.user,
       uid: this.props.uid,
       userData: this.props.userData,
       teamID: this.props.teamID,
     }
 
-    if (!this.state.dashboard) {
+    if (!this.props.dashboard) {
       return (
         <Row>
           {this.state.users !== null ?
             Object.keys(this.state.users).map((data) => {
               if (!this.state.users[data].leader) {
                 return ( 
-                  <Col onClick={() => {this.handleEmployeeClick(data)}} key={data} xs='12' sm='6' md='6' lg='3'>
+                  <Col onClick={() => {this.props.handleEmployeeClick(data)}} key={data} xs='12' sm='6' md='6' lg='3'>
                     <PersonBox id={data} data={this.state.users[data]} {...userData}/> 
                   </Col>
                 )
@@ -66,7 +64,7 @@ class Leader extends Component {
         </Row>
       );
   } else {
-    userData['uid'] = this.state.employeeID
+    userData['uid'] = this.props.employeeID
     return (
       <StudentDashboard {...userData}/>
     );
