@@ -46,6 +46,13 @@ class App extends Component {
     )
   }
 
+  // getTeamIDFromFirebase = () => {
+  //   let self = this
+  //   firestore.collection('leaders').doc(self.state.uid).onSnapshot((doc) => {
+  //     self.setTeamIDFromState(doc.data().currentTeam)
+  //   });
+  // }
+
   getTeamIDFromFirebase = () => {
     let self = this
     firestore.collection("peopleData").onSnapshot((querySnapshot) => {
@@ -69,7 +76,7 @@ class App extends Component {
     })
   }
 
-  getUserFromsessionStorage() {
+  getUserFromsessionStorage = () => {
     const uid = sessionStorage.getItem('uid');
     if (!uid) return;
     this.setState({uid}, () => {
