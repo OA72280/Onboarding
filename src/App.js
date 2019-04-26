@@ -120,7 +120,7 @@ class App extends Component {
           this.signedIn()
             ? (this.state.user
               ?
-                <Home page='home' {...data}/>
+                <Home page='home' {...methods} {...data}/>
               :
                null
             )

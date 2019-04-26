@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 
-import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Input,
-  CardHeader, CardTitle, CardBody, Button, Modal, ModalFooter, CardText} from 'mdbreact';
-import {NavLink, Redirect} from 'react-router-dom'
+import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'mdbreact';
 
-import {Row, Col} from 'reactstrap'
+// import {Row, Col} from 'reactstrap'
 // import {Input} from 'mdbreact'
 import {firestore} from './base'
 
@@ -50,7 +48,7 @@ class TeamDropDown extends Component {
                 if (key === undefined) return null
                   return (
                     // <NavLink key={key} to={`/itatlas/Home/AtlasGrid/${this.props.uid}/${key}`}>
-                      <DropdownItem key={key}>
+                      <DropdownItem onClick={() => {this.props.setTeamIDFromState(key)}} key={key}>
                         {key}
                       </DropdownItem>
                     // </NavLink>  
@@ -59,7 +57,7 @@ class TeamDropDown extends Component {
         
               <DropdownItem divider />
 
-              <DropdownItem className='newLocation' onClick={this.handleNewAtlas} >New Account</DropdownItem>
+              <DropdownItem className='newLocation' onClick={this.props.toggleNewTeam} >New Account</DropdownItem>
 
             </DropdownMenu>
           </Dropdown>

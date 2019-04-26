@@ -54,6 +54,9 @@ class Home extends Component {
 
       dashboard: false, 
       employeeID: '',
+
+      newTeam: false,
+      teamName: '',
     };
   }
 
@@ -368,6 +371,34 @@ class Home extends Component {
     this.setState({mentorPicture: ev.target.value})
   }
   //======================================================== End New Mentor Functions ========================================================
+  //======================================================== New Team Functions ========================================================
+  handleNewTeam = () => {
+    let code = this.makeid(10);
+
+    let self = this
+    firestore.collection("leaders").doc(this.props.uid).get().then((doc) => {
+      let oldTeams = doc.data().teams
+
+      oldTeams.push(code)
+
+      firestore.collection("leaders").doc(self.props.uid).update({teams: oldTeams})
+    })
+
+    firestore.collection(code).doc('teamData').set({teamName: this.state.teamName})
+    firestore.collection(code).doc(this.props.uid).set(this.props.userData)
+
+    this.toggleNewTeam()
+  }
+
+  toggleNewTeam = () => {
+    this.setState({newTeam: !this.state.newTeam})
+  }
+
+  handleTeamName = (ev) => {
+    this.setState({teamName: ev.target.value})
+  }
+
+    //======================================================== New Team Functions ========================================================
 
   makeid = (size) => {
     let text = "";
@@ -474,12 +505,12 @@ class Home extends Component {
     };
 
     const data = {
-      user: this.props.user,
-      uid: this.props.uid,
-      userData: this.props.userData,
-      teamID: this.props.teamID,
+        user: this.props.user,
+        uid: this.props.uid,
+        userData: this.props.userData,
+        teamID: this.props.teamID,
     }
-
+    
     // Handle Routing for which main page to show
     // This is how the side bar laods the different components
     
@@ -595,13 +626,33 @@ class Home extends Component {
             </ModalFooter>
         </Modal>
 
+        <Modal isOpen={this.state.newTeam} size="sm" toggle={this.toggleNewTeam} centered backdrop={false}>   
+          <CardHeader className='gradient' color="info-color-dark lighten-1"></CardHeader>
+            <CardBody>                   
+              <CardTitle className='previewText'>New Task</CardTitle>  
+
+              <Input onChange={(ev) => this.handleTeamName(ev)} value={this.state.teamName} name='name' label='Enter Task Name' />
+  
+            </CardBody>
+
+            <ModalFooter>
+                <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewTeam}>Exit</Button>{' '}
+                <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewTeam}> Save</Button>
+            </ModalFooter>
+        </Modal>
+
         <Row>
           {this.state.dashboard ?
             <h1 onClick={this.hideDashboard} className='ITAtlasText'> <b>LAUNCH</b></h1>
           :
             <h1 className='ITAtlasText'> <b>LAUNCH</b></h1>
           } 
-          <TeamDropDown className='accountdropdown' {...data}/>
+          
+          {this.props.userData !== null && this.props.userData.leader ?
+            <TeamDropDown setTeamIDFromState={this.props.setTeamIDFromState} toggleNewTeam={this.toggleNewTeam} className='accountdropdown' {...data}/>
+          :
+            null
+          }
 
 
           {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' ?
