@@ -23,6 +23,7 @@ class App extends Component {
       user: null,
       userData: null,
       teamID: null,
+      users: null,
     }
   }
 
@@ -89,12 +90,14 @@ class App extends Component {
     if (!teamID) return;
     this.setState({teamID: teamID});
     this.getUserData(teamID);
+    this.getUsers(teamID);
   }
 
   setTeamIDFromState = (teamID) => {
     sessionStorage.setItem("teamID", teamID);
     this.setState({teamID: teamID});
     this.getUserData(teamID);
+    this.getUsers(teamID);
   }
 
   authHandler = (user) => {
@@ -103,6 +106,17 @@ class App extends Component {
       this.getTeamIDFromFirebase();
     })
   };
+
+  getUsers = (teamID) => {
+    let self = this
+    let users = {}
+    firestore.collection(teamID).onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          users[doc.id] = doc.data()
+          self.setState({users: users})
+      });
+    });
+  }
 
   signedIn = () => {
     return this.state.uid
@@ -114,6 +128,7 @@ class App extends Component {
       uid: this.state.uid,
       userData: this.state.userData,
       teamID: this.state.teamID,
+      users: this.state.users
     }
 
     const methods = {

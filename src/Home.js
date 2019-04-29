@@ -509,6 +509,7 @@ class Home extends Component {
         uid: this.props.uid,
         userData: this.props.userData,
         teamID: this.props.teamID,
+        users: this.props.users
     }
     
     // Handle Routing for which main page to show

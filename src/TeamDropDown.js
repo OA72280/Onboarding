@@ -36,7 +36,7 @@ class TeamDropDown extends Component {
   render() {
     return (
       <div>
-        <Dropdown style={{marginTop: '15px', marginLeft: '15px'}} isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+        <Dropdown style={{marginTop: '15px', marginLeft: '15px'}} toggle={this.toggle}>
             <DropdownToggle caret className='dropdownColor' color='warning'>
               Test
             </DropdownToggle>
