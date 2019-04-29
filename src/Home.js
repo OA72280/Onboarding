@@ -384,8 +384,11 @@ class Home extends Component {
       firestore.collection("leaders").doc(self.props.uid).update({teams: oldTeams})
     })
 
-    firestore.collection(code).doc('teamData').set({teamName: this.state.teamName})
-    firestore.collection(code).doc(this.props.uid).set(this.props.userData)
+    firestore.collection(code).doc('teamData').set({teamName: this.state.teamName, tasks: []})
+    let tmp = this.props.userData
+    tmp.tasks = []
+    tmp.team = code
+    firestore.collection(code).doc(this.props.uid).set(tmp)
 
     this.toggleNewTeam()
   }

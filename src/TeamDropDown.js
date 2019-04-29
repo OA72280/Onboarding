@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'mdbreact';
 
-// import {Row, Col} from 'reactstrap'
-// import {Input} from 'mdbreact'
 import {firestore} from './base'
 
 class TeamDropDown extends Component {
@@ -14,6 +12,8 @@ class TeamDropDown extends Component {
     this.state = { 
       dropdownOpen: false,
       teams: [],
+      teamNames: [],
+      translator: {},
     }
   }
 
@@ -21,8 +21,21 @@ class TeamDropDown extends Component {
     let self = this
     firestore.collection('leaders').doc(this.props.uid).onSnapshot((doc) => {
       if (doc.data().teams !== null && doc.data().teams !== undefined)
-        self.setState({teams: doc.data().teams}) 
+        self.setState({teams: doc.data().teams}, this.getTeamNames(doc.data().teams)) 
     })
+  }
+
+  getTeamNames = (teams) => {
+    let self = this
+    for (let i in teams) {
+      firestore.collection(teams[i]).doc('teamData').onSnapshot((doc) => {
+        let tmp = this.state.teamNames
+        tmp[i] = doc.data().teamName
+        let tmp2 = this.state.translator
+        tmp2[teams[i]] = tmp[i]
+        self.setState({teamName: tmp, translator: tmp2})
+      })
+    }
   }
 
   toggle = () => {
@@ -38,20 +51,18 @@ class TeamDropDown extends Component {
       <div>
         <Dropdown style={{marginTop: '15px', marginLeft: '15px'}} toggle={this.toggle}>
             <DropdownToggle caret className='dropdownColor' color='warning'>
-              Test
+              {this.state.translator[this.props.teamID]}
             </DropdownToggle>
             <DropdownMenu>
 
               <DropdownItem header>My Accounts</DropdownItem>
 
-              {this.state.teams.map((key) => {
+              {this.state.teams.map((key, id) => {
                 if (key === undefined) return null
                   return (
-                    // <NavLink key={key} to={`/itatlas/Home/AtlasGrid/${this.props.uid}/${key}`}>
-                      <DropdownItem onClick={() => {this.props.setTeamIDFromState(key)}} key={key}>
-                        {key}
-                      </DropdownItem>
-                    // </NavLink>  
+                    <DropdownItem onClick={() => {this.props.setTeamIDFromState(key)}} key={key}>
+                     {this.state.teamNames[id]} ({key})
+                    </DropdownItem>
                   )
               })}
         
