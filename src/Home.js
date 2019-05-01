@@ -10,11 +10,12 @@ import Mentors from './Mentors/Mentors'
 import MyMentors from './Mentors/MyMentors'
 import Avatar from '@material-ui/core/Avatar'
 import Chip from '@material-ui/core/Chip'
+import PreviewBox from './Leader/PreviewBox'
 import TeamDropDown from './TeamDropDown'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
-import {Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
+import {Card, Container, Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
 import {Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import {firestore} from './base';
@@ -57,6 +58,8 @@ class Home extends Component {
 
       newTeam: false,
       teamName: '',
+
+      component: false,
     };
   }
 
@@ -401,7 +404,18 @@ class Home extends Component {
     this.setState({teamName: ev.target.value})
   }
 
-    //======================================================== New Team Functions ========================================================
+  //======================================================== New Team Functions ========================================================
+  //======================================================== New Component Functions ========================================================
+
+  toggleNewComponent = () => {
+    this.setState({component: !this.state.component})
+  }
+
+  handleNewComponent = () => {
+    console.log('SAViNG!')
+  }
+
+  //======================================================== New Component Functions ========================================================
 
   makeid = (size) => {
     let text = "";
@@ -645,6 +659,40 @@ class Home extends Component {
             </ModalFooter>
         </Modal>
 
+        <Modal isOpen={this.state.component} size="lg" toggle={this.toggleNewComponent} centered backdrop={false}>   
+          <CardHeader className='gradient' color="info-color-dark lighten-1">New Component</CardHeader>
+            <CardBody>                   
+              <CardTitle className='previewText'>Preview</CardTitle>  
+              
+                  <Card>
+                    <CardBody>
+                      <Container>
+                        <Row>
+                          <Col sm='3'></Col>
+                            <Col sm='6'>
+                              <PreviewBox title='Cool Title'/>
+                            </Col>
+                          <Col sm='3'></Col>
+                        </Row>
+                      </Container>
+                    </CardBody>
+                  </Card>
+
+              <hr />
+
+              <Input name='name' label='Enter Component Name' />
+
+
+              {/* <Input onChange={(ev) => this.handleTeamName(ev)} value={this.state.teamName} name='name' label='Enter Task Name' /> */}
+  
+            </CardBody>
+
+            <ModalFooter>
+                <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewComponent}>Exit</Button>{' '}
+                <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewComponent}> Save</Button>
+            </ModalFooter>
+        </Modal>
+
         <Row>
           {this.state.dashboard ?
             <h1 onClick={this.hideDashboard} className='ITAtlasText'> <b>LAUNCH</b></h1>
@@ -661,6 +709,12 @@ class Home extends Component {
 
           {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' ?
             <Button onClick={this.toggleNewTask} style={{right: '2em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Task</Button>              
+          :
+            null
+          }
+
+          {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' && this.state.dashboard ?
+            <Button onClick={this.toggleNewComponent} style={{right: '13em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Component</Button>              
           :
             null
           }

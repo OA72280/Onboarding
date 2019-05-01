@@ -42,10 +42,6 @@ class TeamDropDown extends Component {
     this.setState({dropdownOpen: !this.state.dropdownOpen})
   }
 
-  handleNewAtlas = () => {
-    console.log('new!')
-  }
-
   render() {
     return (
       <div>

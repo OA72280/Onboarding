@@ -27,6 +27,15 @@
   right: 25px;
 }
 
+.gradient {
+  background: linear-gradient(to right, #33ccff 0%, #0066cc 83%);
+  height: 80px;
+  text-align: center;
+  font-size: 2em;
+  font: black;
+  font-family: 'Lato', sans-serif;
+}
+
 .userIcons {
   position: absolute; 
   right: 150px;
