@@ -16,7 +16,7 @@ import TeamDropDown from './TeamDropDown'
 import 'react-datepicker/dist/react-datepicker.css'
 
 import {Card, Container, Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
-import {Row, Col} from 'reactstrap'
+import {Form, Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import {firestore} from './base';
 
@@ -60,6 +60,7 @@ class Home extends Component {
       teamName: '',
 
       component: false,
+      componentData: ["", {label: "Name", value: ""}, {label: "Email", value: ""}],
     };
   }
 
@@ -411,9 +412,34 @@ class Home extends Component {
     this.setState({component: !this.state.component})
   }
 
-  handleNewComponent = () => {
-    console.log('SAViNG!')
+  handleComponentName = (ev) => {
+    let tmp = this.state.componentData
+    tmp[0] = ev.target.value
+    this.setState({componentData: tmp})
   }
+
+  handleNewInput = () => {
+    let tmp = this.state.componentData
+    tmp[tmp.length] = {label: "", value: ""}
+    this.setState({componentData: tmp})
+  }
+
+  handleComponentEdit = (ev) => {
+    let tmp = this.state.componentData
+    tmp[ev.target.name] = {label: ev.target.value, value: ev.target.value} 
+    this.setState({componentData: tmp})
+  }
+
+  // handleFormSubmit = (ev) => {
+  //   ev.preventDefault()
+
+  //   let tmp = this.state.componentData
+  //   tmp[0] = ev.target.componentName.value
+  //   tmp[1] = ev.target.name.value
+  //   tmp[2] = ev.target.email.value
+
+  //   this.setState({componentData: tmp})
+  // }
 
   //======================================================== New Component Functions ========================================================
 
@@ -659,6 +685,7 @@ class Home extends Component {
             </ModalFooter>
         </Modal>
 
+        {/* <Form onSubmit={this.handleFormSubmit}> */}
         <Modal isOpen={this.state.component} size="lg" toggle={this.toggleNewComponent} centered backdrop={false}>   
           <CardHeader className='gradient' color="info-color-dark lighten-1">New Component</CardHeader>
             <CardBody>                   
@@ -670,28 +697,26 @@ class Home extends Component {
                         <Row>
                           <Col sm='3'></Col>
                             <Col sm='6'>
-                              <PreviewBox title='Cool Title'/>
+                              <PreviewBox handleComponentEdit={this.handleComponentEdit} componentData={this.state.componentData} title='Cool Title'/>
                             </Col>
                           <Col sm='3'></Col>
                         </Row>
                       </Container>
                     </CardBody>
                   </Card>
-
               <hr />
 
-              <Input name='name' label='Enter Component Name' />
+              <Input onChange={(ev) => this.handleComponentName(ev)} value={this.state.componentData[0]} name='componentName' label='Enter Component Name' />
+              <Button onClick={this.handleNewInput} style={{width: '120px'}} className='saveButton' color="info">New Input</Button>
 
-
-              {/* <Input onChange={(ev) => this.handleTeamName(ev)} value={this.state.teamName} name='name' label='Enter Task Name' /> */}
-  
             </CardBody>
 
             <ModalFooter>
                 <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewComponent}>Exit</Button>{' '}
-                <Button style={{width: '100px', height: '50px'}} className='saveButton' color="info" onClick={this.handleNewComponent}> Save</Button>
+                <Button style={{width: '100px', height: '50px'}} className='saveButton'color="info">Save</Button>
             </ModalFooter>
         </Modal>
+        {/* </Form> */}
 
         <Row>
           {this.state.dashboard ?
