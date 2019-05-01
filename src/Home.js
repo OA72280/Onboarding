@@ -60,7 +60,7 @@ class Home extends Component {
       teamName: '',
 
       component: false,
-      componentData: ["", {label: "Name", value: ""}, {label: "Email", value: ""}],
+      componentData: ["", {label: "", value: ""}],
     };
   }
 

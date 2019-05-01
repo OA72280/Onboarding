@@ -20,7 +20,6 @@ class PreviewBox extends Component {
           <Col sm='10'>
 
             {this.props.componentData.map((data, id) => {
-              console.log(data)
               if (id != 0)
                 return (
                   <Input key={id} onChange={(ev) => this.props.handleComponentEdit(ev)} value={data.value} name={id} style={{fontSize: '0.85em'}} />
