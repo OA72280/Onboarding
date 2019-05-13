@@ -79,13 +79,15 @@ class Home extends Component {
     // let id = this.makeid(10)
     firestore.collection(this.props.teamID).get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-          let oldTasks = doc.data().tasks
-          oldTasks.push({ 
-            dueDate: this.state.dueDate,
-            completion: 0,
-            taskName: this.state.taskName,
-          })
-          firestore.collection(this.props.teamID).doc(doc.id).update({tasks: oldTasks})
+          if (doc.data().tasks !== undefined && doc.data().tasks !== null) {
+            let oldTasks = doc.data().tasks
+            oldTasks.push({ 
+              dueDate: this.state.dueDate,
+              completion: 0,
+              taskName: this.state.taskName,
+            })
+            firestore.collection(this.props.teamID).doc(doc.id).update({tasks: oldTasks})
+          }
       });
     });
     this.toggleNewTask()
@@ -124,29 +126,33 @@ class Home extends Component {
             let selected = doc1.data().mentors
             for (let j in selected) {
               if (selected[j].mentorPicture === self.state.mentorPicture) {
-                
-                let tmp = this.getInitals(doc1.data().name)
+              
+                if (doc1.data().name !== undefined && doc1.data().name !== null) {
+                  let tmp = this.getInitals(doc1.data().name)
 
-                selected1.push({
-                  id: doc1.id,
-                  name: doc1.data().name,
-                  initals: tmp
-                })
-                bool = true
-                self.setState({selectedEmployees: selected1})
+                  selected1.push({
+                    id: doc1.id,
+                    name: doc1.data().name,
+                    initals: tmp
+                  })
+                  bool = true
+                  self.setState({selectedEmployees: selected1})
+                }
               }
             }
 
             if (!bool) {
-              let tmp = this.getInitals(doc1.data().name)
+              if (doc1.data().name !== undefined && doc1.data().name !== null) {
+                let tmp = this.getInitals(doc1.data().name)
 
-              employees.push({
-                id: doc1.id,
-                name: doc1.data().name,
-                initals: tmp
-              })
+                employees.push({
+                  id: doc1.id,
+                  name: doc1.data().name,
+                  initals: tmp
+                })
 
-              self.setState({allEmployees: employees})
+                self.setState({allEmployees: employees})
+              }
             }
           })
         })
@@ -424,22 +430,17 @@ class Home extends Component {
     this.setState({componentData: tmp})
   }
 
+  handleDeleteInput = () => {
+    let tmp = this.state.componentData
+    tmp.pop()
+    this.setState({componentData: tmp})
+  }
+
   handleComponentEdit = (ev) => {
     let tmp = this.state.componentData
     tmp[ev.target.name] = {label: ev.target.value, value: ev.target.value} 
     this.setState({componentData: tmp})
   }
-
-  // handleFormSubmit = (ev) => {
-  //   ev.preventDefault()
-
-  //   let tmp = this.state.componentData
-  //   tmp[0] = ev.target.componentName.value
-  //   tmp[1] = ev.target.name.value
-  //   tmp[2] = ev.target.email.value
-
-  //   this.setState({componentData: tmp})
-  // }
 
   //======================================================== New Component Functions ========================================================
 
@@ -708,6 +709,7 @@ class Home extends Component {
 
               <Input onChange={(ev) => this.handleComponentName(ev)} value={this.state.componentData[0]} name='componentName' label='Enter Component Name' />
               <Button onClick={this.handleNewInput} style={{width: '120px'}} className='saveButton' color="info">New Input</Button>
+              <Button onClick={this.handleDeleteInput} style={{width: '120px'}} className='saveButton' color="info">Delete Input</Button>
 
             </CardBody>
 
