@@ -27,7 +27,7 @@ class TaskBox extends Component {
         <br />
         
         {this.props.data.tasks.map((data) => {
-          if (this.props.data.tasks.length < 1) return 
+          if (this.props.data.tasks.length < 1) return null
           let value = data;
           let color = 'red'
 

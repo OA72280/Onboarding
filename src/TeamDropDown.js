@@ -45,7 +45,7 @@ class TeamDropDown extends Component {
   render() {
     return (
       <div>
-        <Dropdown style={{marginTop: '15px', marginLeft: '15px'}} toggle={this.toggle}>
+        <Dropdown toggle={this.toggle}>
             <DropdownToggle caret className='dropdownColor' color='warning'>
               {this.state.translator[this.props.teamID]}
             </DropdownToggle>

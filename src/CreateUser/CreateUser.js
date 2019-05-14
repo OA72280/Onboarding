@@ -68,6 +68,7 @@ class CreateUser extends Component {
               mentors: [],
               tasks: [],
               picture: self.state.uploadedImage,
+              components: [],
             })
 
             firestore.collection(code).doc(fireauth.currentUser.uid).set({
@@ -78,6 +79,7 @@ class CreateUser extends Component {
               mentors: [],
               tasks: [],
               picture: self.state.uploadedImage,
+              components: [],
             })
 
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
@@ -101,6 +103,7 @@ class CreateUser extends Component {
               tasks: [],
               picture: self.state.uploadedImage,
               mentors: [],
+              components: [],
             })
 
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({

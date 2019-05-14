@@ -2,8 +2,11 @@ import React, {Component} from 'react';
 
 
 import {Row, Col} from 'reactstrap'
+import {firestore} from '../base';
+import {Card, Container, Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
 
 import LocationPreference from '../LocationPreference'
+import LiveComponent from './LiveComponent'
 import Student from './Student'
 import PearsonVue from '../PearsonVue';
 
@@ -14,7 +17,14 @@ class StudentDashboard extends Component {
 
     this.state = {
       dashboard: true,
+      components: [],
     }
+  }
+
+  componentWillMount = () => {
+    firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
+      this.setState({components: doc.data().components})
+    })
   }
 
   openTasks = () => {
@@ -31,24 +41,28 @@ class StudentDashboard extends Component {
     
     if (this.state.dashboard) {
       return (
-          <Row>
-            <Col sm='3'>
-              <br/> <br />
-              <LocationPreference {...userData}/>
-            </Col>
 
-            <Col sm='9'>
-              <div>
-                <Student openTasks={this.openTasks} dashboard={this.state.dashboard} {...userData}/>
-              </div>
-            </Col>
-
-            <Col sm='3'>
-              <br/> <br />
-              <PearsonVue {...userData}/>
-            </Col>
-
-          </Row>
+        <Row>
+          <Col sm='9'>
+            <Card>
+              <CardBody>
+                <Container>
+                  <div>
+                    <Student openTasks={this.openTasks} dashboard={this.state.dashboard} {...userData}/>
+                  </div>
+                </Container>
+              </CardBody>
+            </Card>
+            <br />
+          </Col>
+          {this.state.components.map((task, id) => {
+            return ( 
+              <Col key={id} sm="3">
+                <LiveComponent componentData={this.state.components[id]} {...userData} />
+              </Col>
+            )            
+          })}
+        </Row>
       );
     } else {
       return (

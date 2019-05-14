@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {firestore} from '../base';
 
 import {Row, Col} from 'reactstrap';
 import PersonBox from './PersonBox'

@@ -5,7 +5,6 @@ import Side from './SideBar/Side.js'
 import CalendarPage from './Calendar/CalendarPage.js'
 import Leader from './Leader/Leader'
 import StudentDashboard from './Student/StudentDashboard'
-import Student from './Student/Student'
 import Mentors from './Mentors/Mentors'
 import MyMentors from './Mentors/MyMentors'
 import Avatar from '@material-ui/core/Avatar'
@@ -16,7 +15,7 @@ import TeamDropDown from './TeamDropDown'
 import 'react-datepicker/dist/react-datepicker.css'
 
 import {Card, Container, Modal, CardHeader, CardBody, CardTitle, Button, ModalFooter, Input} from "mdbreact"
-import {Form, Row, Col} from 'reactstrap'
+import {Row, Col} from 'reactstrap'
 import DatePicker from 'react-datepicker'
 import {firestore} from './base';
 
