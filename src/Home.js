@@ -413,6 +413,35 @@ class Home extends Component {
   //======================================================== New Team Functions ========================================================
   //======================================================== New Component Functions ========================================================
 
+  saveNewComponent = () => {
+    let self = this
+
+    firestore.collection(self.props.teamID).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          if (doc.data().components !== undefined && doc.data().components !== null) {
+            let oldCom = doc.data().components
+
+            let tmp = []
+            for (let i in self.state.componentData) {
+              if (i != 0) {
+                let tmp1 = {}
+                tmp1[self.state.componentData[i].label] = ""                
+                tmp.push(tmp1)
+              }
+              // tmp.shift()
+            }
+
+            oldCom.push({ 
+              blanks: tmp,
+              name: this.state.componentData[0],
+            })
+
+            firestore.collection(self.props.teamID).doc(doc.id).update({components: oldCom})
+          }
+      });
+    });
+  }
+
   toggleNewComponent = () => {
     this.setState({component: !this.state.component})
   }
@@ -714,7 +743,7 @@ class Home extends Component {
 
             <ModalFooter>
                 <Button style={{width: '100px', height: '50px'}} className='closeButton' color="warning" onClick={this.toggleNewComponent}>Exit</Button>{' '}
-                <Button style={{width: '100px', height: '50px'}} className='saveButton'color="info">Save</Button>
+                <Button style={{width: '100px', height: '50px'}} className='saveButton'color="info" onClick={this.saveNewComponent}>Save</Button>
             </ModalFooter>
         </Modal>
         {/* </Form> */}

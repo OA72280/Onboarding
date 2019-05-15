@@ -58,7 +58,7 @@ class StudentDashboard extends Component {
           {this.state.components.map((task, id) => {
             return ( 
               <Col key={id} sm="3">
-                <LiveComponent componentData={this.state.components[id]} {...userData} />
+                <LiveComponent components={this.state.components} componentID={id} componentData={this.state.components[id]} {...userData} />
               </Col>
             )            
           })}
