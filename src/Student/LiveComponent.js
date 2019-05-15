@@ -16,12 +16,27 @@ class LiveComponent extends Component {
     }
   }
 
-  componentWillMount() {
+  deleteComponent = () => {
     let self = this
-    
-    // firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {
-    //     this.setState({components: doc.data().components})
-    // })
+
+    firestore.collection(self.props.teamID).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            if (doc.data().components !== undefined && doc.data().components !== null) {
+                
+                let tmp = self.props.components
+                for (let i in self.props.components) {
+                    if (self.props.components[i].name === self.props.componentData.name) {
+                        if (i > -1) {
+                            tmp.splice(i, 1);
+                            console.log(tmp);
+                        }
+                    }
+                }
+
+                firestore.collection(self.props.teamID).doc(doc.id).update({components: tmp})
+            }
+        })
+    })
   }
 
   render() {
@@ -33,7 +48,11 @@ class LiveComponent extends Component {
       }
     return (
         <Card>
-            <CardHeader style={{paddingTop: '1.5em', fontSize: '1.1em'}} className='gradient name' color="info-color-dark lighten-1">{this.props.componentData.name}</CardHeader>
+            {this.props.userData.leader ?
+                <CardHeader style={{paddingTop: '1.5em', fontSize: '1.1em'}} className='gradient name' color="info-color-dark lighten-1">{this.props.componentData.name} <i onClick={this.deleteComponent} style={{float: "right"}} className="fas fa-times"></i></CardHeader>
+            :
+                <CardHeader style={{paddingTop: '1.5em', fontSize: '1.1em'}} className='gradient name' color="info-color-dark lighten-1">{this.props.componentData.name}</CardHeader>
+            }
             <CardBody>
                 <Container>
                     {this.props.componentData.blanks.map((blank, id) => {

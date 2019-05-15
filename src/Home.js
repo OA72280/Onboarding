@@ -768,7 +768,7 @@ class Home extends Component {
             null
           }
 
-          {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' && this.state.dashboard ?
+          {this.props.userData !== null && this.props.userData.leader && this.props.page === 'home' ?
             <Button onClick={this.toggleNewComponent} style={{right: '13em', float: 'right', position: 'absolute', marginTop: '21px', marginLeft: '15px'}} color='blue' className='shareButton'>Add Component</Button>              
           :
             null
