@@ -51,6 +51,28 @@ class TaskBox extends Component {
 
   }
 
+  deleteTask = () => {
+    let self = this
+    firestore.collection(self.props.teamID).get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          if (doc.data().tasks !== undefined && doc.data().tasks !== null) {
+              
+              let tmp = self.props.tasks
+              for (let i in self.props.tasks) {
+                  if (self.props.tasks[i].taskName === self.props.task.taskName) {
+                      if (i > -1) {
+                          tmp.splice(i, 1);
+                      }
+                  }
+              }
+
+              firestore.collection(self.props.teamID).doc(doc.id).update({tasks: tmp})
+            }
+        })
+    })
+    
+  }
+
   render() {
     const options = [
       { value: 'Not Started', label: 'Not Started' },
@@ -63,7 +85,11 @@ class TaskBox extends Component {
 
         <div className={`clientColorbox ${this.state.color}`}></div>
         
-        <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.task.taskName}</p>
+        {this.props.userData.leader ?
+          <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.task.taskName} <i onClick={this.deleteTask} style={{marginTop: '5px', float: "right"}} className="fas fa-times"></i></p>
+          :
+          <p style={{paddingLeft: '20px', paddingRight: '20px'}} className='name'>{this.props.task.taskName}</p>
+        }
 
         <hr className='clientHR' />
 
