@@ -154,7 +154,7 @@ class App extends Component {
           this.signedIn()
             ? (this.state.user
               ?
-                <Home page='calendar' {...data}/>
+                <Home page='calendar' {...methods} {...data}/>
               :
                null
             )
@@ -166,7 +166,7 @@ class App extends Component {
           this.signedIn()
             ? (this.state.user
               ?
-                <Home page='mentors' {...data}/>
+                <Home page='mentors' {...methods} {...data}/>
               :
                null
             )

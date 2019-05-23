@@ -82,6 +82,10 @@ class CreateUser extends Component {
               components: [],
             })
 
+            firestore.collection(code).doc("teamData").set({
+              teamName: `${target.teamName.value}`,
+            })
+
             firestore.collection("peopleData").doc(fireauth.currentUser.uid).set({
               name: `${target.firstName.value} ${target.lastName.value}`,
               email: target.email.value,
@@ -211,9 +215,11 @@ class CreateUser extends Component {
               <Input name='confirmPassword' label="Confirm Password" type="password"/>
               
               {!this.state.checked ? 
-                  <Input name='teamCode' label="Team Code" />
+                  <div>
+                    <Input name='teamCode' label="Team Code" />
+                  </div>
                 :
-                  null
+                <Input name='teamName' label="Team Name" />
               }
 
               {this.state.uploadedImage === '' ?

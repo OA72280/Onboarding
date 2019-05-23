@@ -23,6 +23,14 @@ class CalendarPage extends Component {
     this.getCalendarEvents()
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.teamID !== this.props.teamID) {
+      this.setState({dates: []}, () => {
+        this.getCalendarEvents();
+      })
+    }
+  }
+
   getCalendarEvents = () => {
     let self = this
     firestore.collection(this.props.teamID).doc(this.props.uid).onSnapshot((doc) => {

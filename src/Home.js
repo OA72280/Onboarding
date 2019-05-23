@@ -437,6 +437,7 @@ class Home extends Component {
             })
 
             firestore.collection(self.props.teamID).doc(doc.id).update({components: oldCom})
+            self.toggleNewComponent()
           }
       });
     });
