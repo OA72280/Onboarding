@@ -1,68 +1,19 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Launch On-Boarding Site
 
-## Available Scripts
+This project was created to help the launch team keep track of small tasks that need to be completed and marked. This originally was a spreedsheet that was shared with the employees, however, a website with the ability to be working on live and also available on any computer was a huge benfit and the reason the site was created. There are 4 main components to the current site 
 
-In the project directory, you can run:
+### `Tasks`
 
-### `npm start`
+This is where the manager can create small tasks, such as finish I9 paper work, and then the employee can select wether or not they have started or completed each task. These help the manager to quickly glance at who as completed what tasks and they are currently broken into 4 parts, This Week Tasks, Next Weeks Tasks, Looking Ahead Tasks, and Past Due Tasks. They are organized by the date they are due to make it easier for the employees to see what needs to be done. Also, as the manager you have the ability to delete old tasks that don't need to be in there any more, like completing all I9 paper work, once you know everyone is done you can click the 'X' on the task to remove it from all the members in that team. To create these tasks all you have to do is click the "Add Task" button in the nav bar and a dialog box will pop up to fill out.  
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `Components`
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Components were build to handle the tasks that take more than a yes or no answer. The best example of these would be Location Preference upon completion of launch. You can click "Add Component" in the nav bar and name the component, add fields, and also label them for the employees to fill out. Once created the employees will see these on their dashboard and be able to fill them out with what ever is being asked of them.  
 
-### `npm test`
+### `Calendar`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The calendar acts as a quick glance for employees to see what the have coming up in terms of their tasks. Whenever a task is created, it is automatically connected to the calendar. We were wanted to get it to send an email to the employees to match up with the calendar however I ran out of time as it was causing problems with other parts of the site. 
 
-### `npm run build`
+### `Mentors`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This tab is meant for the manager to be able to create quick people cards with different mentors and executive mentors for the employees, you do this by clicking add mentor and from their you fill out the different fields about that person. Once they are created, you can click on the box and a dialog will pop up where you will be able to add different people as mentees to that mentor. 
