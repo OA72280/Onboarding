@@ -21,7 +21,7 @@ This tab is meant for the manager to be able to create quick people cards with d
 
 ## Where is the data stored?
 
-All the data for this application has been stored in a google service called Firebase. Firebase is a quick way to be able to store and acess saved information and is what I choose for this project. There are many services that firebase offers, but I only used the Authentication, Database, and Storage. The Authentication is what handles everyones email and passwords, database stores the main data behind each user and team, and the storage stores the pictures associated with each person. Although I have tested everything and could not find any problems with the site, I will put a description here so that you can be able to fix any problems that arise on the site from the backend.
+All the data for this application has been stored in a google service called [Firebase](https://firebase.google.com/). Firebase is a quick way to be able to store and acess saved information and is what I choose for this project. There are many services that firebase offers, but I only used the Authentication, Database, and Storage. The Authentication is what handles everyones email and passwords, database stores the main data behind each user and team, and the storage stores the pictures associated with each person. Although I have tested everything and could not find any problems with the site, I will put a description here so that you can be able to fix any problems that arise on the site from the backend.
 
 ## Database Layout?
 
