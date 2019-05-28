@@ -18,6 +18,7 @@ The calendar acts as a quick glance for employees to see what the have coming up
 
 This tab is meant for the manager to be able to create quick people cards with different mentors and executive mentors for the employees, you do this by clicking add mentor and from their you fill out the different fields about that person. Once they are created, you can click on the box and a dialog will pop up where you will be able to add different people as mentees to that mentor. 
 
+* Note about the URL, the url has to be "brow1144.github.io/launch" when you refresh the page. If it is something like say "brow1144.github.io/launch/Home" and you refresh, it will take you away frome the site. Be sure if you use the browser refresh re use the main url. *
 
 ## Where is the data stored?
 
