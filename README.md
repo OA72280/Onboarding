@@ -17,3 +17,60 @@ The calendar acts as a quick glance for employees to see what the have coming up
 ### `Mentors`
 
 This tab is meant for the manager to be able to create quick people cards with different mentors and executive mentors for the employees, you do this by clicking add mentor and from their you fill out the different fields about that person. Once they are created, you can click on the box and a dialog will pop up where you will be able to add different people as mentees to that mentor. 
+
+
+## Where is the data stored?
+
+All the data for this application has been stored in a google service called Firebase. Firebase is a quick way to be able to store and acess saved information and is what I choose for this project. There are many services that firebase offers, but I only used the Authentication, Database, and Storage. The Authentication is what handles everyones email and passwords, database stores the main data behind each user and team, and the storage stores the pictures associated with each person. Although I have tested everything and could not find any problems with the site, I will put a description here so that you can be able to fix any problems that arise on the site from the backend.
+
+## Database Layout?
+
+The database is layed out into pages, on the left of the dash is 2 main columns. There is leaders, which stores all the Unique Identifiers (UIDs) of each leader which is mostly just a copy of the leader object from the team but needed to be sepereated for the sake of a feature in the site. Secondly there is the team objects, they are the random characters on the right side. When you click on one, the second column will display all the employees UID, Leader UID, and teamData. Team data just holds the name of the team (Ex. Fall 2019 LAUNCH) and then each user UID holds all the informaiton for that user. I will now break down each component in the user objects
+
+### `Components`
+
+This is an array of objects that stores the blanks with the labels to be filled out by the employees. The key is the label and the value is the value inputed by the user 
+
+### `Email`
+
+Email entered at user creation
+
+### `Leader`
+ 
+Boolean value if they are a leader
+
+### `Mentors`
+
+Array of mentor objects (the mentor objects are stored in the leader object and then assigned to the employee object when assigned)
+
+### `Name`
+
+Name entered at Creation of User
+
+### `Picture`
+
+Picture that was saved at creation of user. It is saved in the storage of firebase and referenced by a url.
+
+### `Task`
+
+The tasks are an array of object that have the completion value (0, 1, 2), a due date, and taskName
+
+### `Team`
+
+UID of the team they are apart of
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
