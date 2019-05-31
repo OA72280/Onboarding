@@ -40,7 +40,7 @@ class Side extends Component {
             <div>
                 
                 <div>
-                    <NavLink style={{textDecoration: 'none'}} to={`/launch/Home`}>
+                    <NavLink style={{textDecoration: 'none'}} to={`/Home`}>
                         <img className='sideLogo' src={'https://upload.wikimedia.org/wikipedia/commons/7/7a/Dell_EMC_logo.svg'} alt="Dell EMC" />
                     </NavLink>
 
@@ -67,14 +67,14 @@ class Side extends Component {
                     </a> */}
                     {/* </NavLink> */}
 
-                    <NavLink style={{textDecoration: 'none'}} to={`/launch/Calendar`}>
+                    <NavLink style={{textDecoration: 'none'}} to={`/Calendar`}>
                         <div style={{cursor: 'pointer'}} className='sideHover'>
                             <i className="fas fa-calendar-alt" />
                             <h6 style={{textAlign: 'center', float: 'left', marginLeft: '-6px', fontSize: '0.5em'}}>Calendar</h6>
                         </div>
                     </NavLink>
 
-                    <NavLink style={{textDecoration: 'none'}} to={`/launch/Mentors`}>
+                    <NavLink style={{textDecoration: 'none'}} to={`/Mentors`}>
                         <div style={{cursor: 'pointer'}} className='sideHover'>
                             <i className="fas fa-user-friends" />
                             <h6 style={{textAlign: 'center', float: 'left', marginLeft: '-6px', fontSize: '0.5em'}}>Mentors</h6>
@@ -90,7 +90,7 @@ class Side extends Component {
                     </NavLink> */}
 
 
-                    <NavLink onClick={this.handleSignOut} style={{textDecoration: 'none'}} to={`/launch/SignIn`}>
+                    <NavLink onClick={this.handleSignOut} style={{textDecoration: 'none'}} to={`/SignIn`}>
                         <i className="fas fa-sign-out-alt singOutIcon"/>
                     </NavLink>
 
