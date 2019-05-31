@@ -60,6 +60,12 @@ The tasks are an array of object that have the completion value (0, 1, 2), a due
 
 UID of the team they are apart of
 
+## How to run the project for Development
+
+http://bootcamp17s2.fretless.com/setup-windows/
+Go to this url and follow the set up it says. This program uses React with Yarn as the package manager, if you have any questions on set up feel free to reach out to me! (brow1144@purdue.edu)
+
+
 
 
 
