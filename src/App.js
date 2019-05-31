@@ -138,7 +138,7 @@ class App extends Component {
     return (
       <Switch>
 
-        <Route exact path='/#Home' render={(match) => (
+        <Route exact path='/Home' render={(match) => (
           this.signedIn()
             ? (this.state.user
               ?
@@ -147,10 +147,10 @@ class App extends Component {
                null
             )
             // eslint-disable-next-line
-            : <Redirect to="/#SignIn"/>
+            : <Redirect to="/SignIn"/>
         )}/>
 
-        <Route exact path='/#Calendar' render={() => (
+        <Route exact path='/Calendar' render={() => (
           this.signedIn()
             ? (this.state.user
               ?
@@ -159,10 +159,10 @@ class App extends Component {
                null
             )
             // eslint-disable-next-line
-            : <Redirect to="/#SignIn"/>
+            : <Redirect to="/SignIn"/>
         )}/>
 
-        <Route exact path='/#Mentors' render={() => (
+        <Route exact path='/Mentors' render={() => (
           this.signedIn()
             ? (this.state.user
               ?
@@ -171,27 +171,27 @@ class App extends Component {
                null
             )
             // eslint-disable-next-line
-            : <Redirect to="/#SignIn"/>
+            : <Redirect to="/SignIn"/>
         )}/>
 
-        <Route exact path='/#SignIn' render={() => (
+        <Route exact path='/SignIn' render={() => (
           !this.signedIn()
             ? <SignIn/>
             // eslint-disable-next-line
-            : <Redirect to={`/#Home`}/>
+            : <Redirect to={`/Home`}/>
         )}/>
         
-        <Route exact path='/#CreateAccount' render={() => (
+        <Route exact path='/CreateAccount' render={() => (
           !this.signedIn()
             ? <CreateUser {...methods} />
             // eslint-disable-next-line
-            : <Redirect to={`/#Home`}/>
+            : <Redirect to={`/Home`}/>
         )}/>
 
         <Route render={() => {
           return (
             // eslint-disable-next-line
-            <Redirect to={`/#Home`} />
+            <Redirect to={`/Home`} />
           )
         }}/>
 
