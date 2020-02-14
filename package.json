@@ -20,7 +20,7 @@
     "react-select": "^2.4.1",
     "react-sidebar": "^3.0.2",
     "reactstrap": "^7.1.0",
-    "yarn": "^1.16.0"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "gh-pages": "^2.0.1",
